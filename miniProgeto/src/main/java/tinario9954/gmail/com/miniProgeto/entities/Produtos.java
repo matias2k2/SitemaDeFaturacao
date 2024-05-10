@@ -2,22 +2,33 @@ package tinario9954.gmail.com.miniProgeto.entities;
 
 import java.io.Serializable;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name = "Produtos")
 public class Produtos implements Serializable{
+
+    private static final    long SerialVersionUID=1L;
     
 
-
-    private Long Produtosid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Produtosid;
     private String  nameProdutos;
     private String  Descricao;
     private double preco;
 
     
-   
-   
-    public Long getProdutosid() {
+    public Integer getProdutosid() {
         return Produtosid;
     }
-    public void setProdutosid(Long produtosid) {
+    public void setProdutosid(Integer produtosid) {
         Produtosid = produtosid;
     }
     public String getNameProdutos() {
@@ -38,7 +49,6 @@ public class Produtos implements Serializable{
     public void setPreco(double preco) {
         this.preco = preco;
     }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -62,12 +72,14 @@ public class Produtos implements Serializable{
             return false;
         return true;
     }
-    public Produtos(Long produtosid, String nameProdutos, String descricao, double preco) {
+    public Produtos(Integer produtosid, String nameProdutos, String descricao, double preco) {
         Produtosid = produtosid;
         this.nameProdutos = nameProdutos;
         Descricao = descricao;
         this.preco = preco;
     }
+
+    
 
     
 
