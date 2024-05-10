@@ -1,0 +1,13 @@
+package tinario9954.gmail.com.miniProgeto;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MiniProgetoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MiniProgetoApplication.class, args);
+	}
+
+}
