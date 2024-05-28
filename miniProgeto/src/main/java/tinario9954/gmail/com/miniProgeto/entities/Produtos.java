@@ -13,10 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Produtos")
 public class Produtos implements Serializable{
-
     private static final    long SerialVersionUID=1L;
-    
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Produtosid;
