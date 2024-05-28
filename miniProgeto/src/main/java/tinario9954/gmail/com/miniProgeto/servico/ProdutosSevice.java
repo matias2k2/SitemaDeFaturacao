@@ -1,13 +1,15 @@
 package tinario9954.gmail.com.miniProgeto.servico;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.service.annotation.GetExchange;
-
+import jakarta.transaction.Transactional;
+import tinario9954.gmail.com.miniProgeto.DTO.ProdutodoDTO;
 import tinario9954.gmail.com.miniProgeto.entities.Produtos;
 import tinario9954.gmail.com.miniProgeto.repository.ProdutosRepository;
 
@@ -18,11 +20,27 @@ public class ProdutosSevice {
     @Autowired
     private ProdutosRepository repositorio;
 
-
-    @GetMapping
-    public List<Produtos> findAll()
+    public List<ProdutodoDTO > findAll()
     {
-        return repositorio.findAll();
+        //lista dos elemento do nosso banco de dados 
+        List<Produtos> listprodutos = repositorio.findAll();
+
+        //convete a lista em uma string 
+
+        /*
+        List<ProdutodoDTO> listaProdutosDto = new ArrayList<>();
+        for( Produtos cat : listprodutos )
+        {
+                listaProdutosDto.add(new ProdutodoDTO(cat));
+        }
+        return listaProdutosDto;
+
+        */
+        
+        return listprodutos.stream().map(x-> new ProdutodoDTO(x)).collect(Collectors.toList());
+    
     }
+
+
     
 }
