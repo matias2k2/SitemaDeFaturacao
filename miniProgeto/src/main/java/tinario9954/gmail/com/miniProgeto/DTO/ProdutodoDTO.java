@@ -9,7 +9,9 @@ public class ProdutodoDTO {
     private Integer Produtosid;
     private String  nameProdutos;
     private String  Descricao;
-    private double preco;
+    private double preco;   
+
+    //Geter e Setter da minha
     public Integer getProdutosid() {
         return Produtosid;
     }
@@ -41,9 +43,5 @@ public class ProdutodoDTO {
         this.Descricao = entity.getDescricao();
         this.preco=entity.getPreco();
     }
-
-
-    
-    
     
 }
