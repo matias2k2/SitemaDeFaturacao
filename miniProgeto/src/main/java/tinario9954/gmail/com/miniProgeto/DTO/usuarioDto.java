@@ -1,5 +1,7 @@
 package tinario9954.gmail.com.miniProgeto.DTO;
 
+import tinario9954.gmail.com.miniProgeto.entities.usuario;
+
 public class usuarioDto {
 
     private int usuario_id;
@@ -32,6 +34,16 @@ public class usuarioDto {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    //contrutor da nossa classe
+
+public usuarioDto(usuario Usuarios) {
+    this.usuario_id = Usuarios.getUsuario_id();
+    this.nome = Usuarios.getNome();
+    this.email = Usuarios.getEmail();
+    this.senha = Usuarios.getSenha();
+} 
+    
 
     
 }

@@ -1,5 +1,7 @@
 package tinario9954.gmail.com.miniProgeto.DTO;
 
+import tinario9954.gmail.com.miniProgeto.entities.ItensFatura;
+
 public class ItensFaturaDto {
 
 
@@ -26,6 +28,15 @@ public class ItensFaturaDto {
     public void setSubtotal(int subtotal) {
         this.subtotal = subtotal;
     }
+     //Contrutor da nossa classe mae 
+    public ItensFaturaDto(ItensFatura ItensFaturas) {
+        this.quantidade = ItensFaturas.getQuantidade();
+        this.preco_unitari = ItensFaturas.getPreco_unitari();
+        this.subtotal = ItensFaturas.getSubtotal();
+    }
+
+   
+
 
     
 }

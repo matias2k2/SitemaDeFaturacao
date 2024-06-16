@@ -1,5 +1,7 @@
 package tinario9954.gmail.com.miniProgeto.DTO;
 
+import tinario9954.gmail.com.miniProgeto.entities.Cliente;
+
 public class ClienteDto {
 
     private int cliente_id;
@@ -39,6 +41,19 @@ public class ClienteDto {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+   
+    public ClienteDto(Cliente clientes) {
+        this.cliente_id = clientes.getCliente_id();
+        this.nome = clientes.getNome();
+        this.endereco = clientes.getEndereco();
+        this.telefone = clientes.getTelefone();
+        this.email = clientes.getEmail();
+    }
+
+
+    
 
     
 }

@@ -1,6 +1,6 @@
 package tinario9954.gmail.com.miniProgeto.entities;
 
-import java.io.Serializable;
+
 
 
 import jakarta.persistence.Entity;
@@ -12,8 +12,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Produtos")
-public class Produtos implements Serializable{
-    private static final    long SerialVersionUID=1L;
+public class Produtos {
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Produtosid;

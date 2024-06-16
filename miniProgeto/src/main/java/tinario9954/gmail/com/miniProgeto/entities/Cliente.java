@@ -1,12 +1,19 @@
 package tinario9954.gmail.com.miniProgeto.entities;
 
+
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="Cliente")
+@Table(name ="Clientes")
 public class Cliente {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cliente_id;
     private String  nome;
     private String endereco;

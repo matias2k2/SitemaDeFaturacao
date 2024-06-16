@@ -1,15 +1,22 @@
 package tinario9954.gmail.com.miniProgeto.entities;
 
+
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ItensFatura" )
+@Table(name = "ItensFaturas" )
 public class ItensFatura {
-   
+
     //item_id
     //fatura_id
     //produto_id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int quantidade;
     private float preco_unitari;
     private int subtotal;

@@ -1,12 +1,18 @@
 package tinario9954.gmail.com.miniProgeto.entities;
 
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
 public class usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int usuario_id;
     private String nome ;
     private String email;
@@ -39,7 +45,18 @@ public class usuario {
         this.senha = senha;
     }
 
+    //
+    public usuario() {
+    }
+    public usuario(int usuario_id, String nome, String email, String senha) {
+        this.usuario_id = usuario_id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
 
+
+    
 
     
 
