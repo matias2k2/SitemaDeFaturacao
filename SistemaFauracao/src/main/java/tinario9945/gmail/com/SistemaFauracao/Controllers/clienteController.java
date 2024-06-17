@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import tinario9945.gmail.com.SistemaFauracao.DTO.ClienteDto;
 import tinario9945.gmail.com.SistemaFauracao.Services.ClienteServices;
 
-//@RestController
-//@RequestMapping(value = "/clientes")
+@RestController
+@RequestMapping(value = "/clientes")
 public class clienteController {
     @Autowired
     private ClienteServices clienteserve;
 
-     //@GetMapping("/")
+    @GetMapping
     public List<ClienteDto> findAll() {
         List<ClienteDto> result = clienteserve.findAll();
         return result;

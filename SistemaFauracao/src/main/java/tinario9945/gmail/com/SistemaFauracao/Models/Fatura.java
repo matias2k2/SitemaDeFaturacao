@@ -1,11 +1,15 @@
 package tinario9945.gmail.com.SistemaFauracao.Models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,8 +22,13 @@ public class Fatura {
     private LocalDate data_emissao;
     private float total;
     
-    //FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id),
-    //FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+    @OneToMany
+    @JoinColumn(name = "cliente_id")
+    private List<Cliente> clientes = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
+    private List<usuario> usuarios = new ArrayList<>();
+
 
     public int getFatura_id() {
         return fatura_id;
