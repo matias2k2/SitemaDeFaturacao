@@ -1,7 +1,14 @@
 package tinario9945.gmail.com.SistemaFauracao.DTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 import tinario9945.gmail.com.SistemaFauracao.Models.Cliente;
 
+@Getter
+@Setter
 public class ClienteDto {
     
     private int cliente_id;
@@ -9,6 +16,7 @@ public class ClienteDto {
     private String endereco;
     private String telefone;
     private String  email;
+   // private List<FaturaDto> faturas = new ArrayList<>();
 
     //Getter e Setter
     public int getCliente_id() {

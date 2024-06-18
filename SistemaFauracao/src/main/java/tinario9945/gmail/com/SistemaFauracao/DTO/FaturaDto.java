@@ -9,9 +9,11 @@ import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
 @Getter
 @Setter
 public class FaturaDto {
-     private  int fatura_id;
+    
+    private  int fatura_id;
     private LocalDate data_emissao;
     private float total;
+
     public int getFatura_id() {
         return fatura_id;
     }

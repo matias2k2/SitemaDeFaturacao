@@ -1,5 +1,6 @@
 package tinario9945.gmail.com.SistemaFauracao.Models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name ="Faturas")
-public class Fatura {
+public class Fatura implements Serializable{
+  
+    private static final long serialVersionUID =1L;
     
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int fatura_id;
+    
     private LocalDate data_emissao;
     private float total;
     
