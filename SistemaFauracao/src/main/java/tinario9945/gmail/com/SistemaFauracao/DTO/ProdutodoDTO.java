@@ -48,4 +48,8 @@ public class ProdutodoDTO {
         this.Descricao = entity.getDescricao();
         this.preco = entity.getPreco();
     }
+
+    public ProdutodoDTO() {
+    }
+    
 }

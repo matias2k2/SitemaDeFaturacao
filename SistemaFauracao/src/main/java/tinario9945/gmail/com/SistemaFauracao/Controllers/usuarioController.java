@@ -1,10 +1,8 @@
 package tinario9945.gmail.com.SistemaFauracao.Controllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,45 +12,43 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import tinario9945.gmail.com.SistemaFauracao.DTO.ClienteDto;
-import tinario9945.gmail.com.SistemaFauracao.Services.ClienteServices;
+import tinario9945.gmail.com.SistemaFauracao.DTO.usuarioDto;
+import tinario9945.gmail.com.SistemaFauracao.Services.usuarioServices;
 
 @RestController
-@RequestMapping("/clientes")
-public class clienteController {
+@RequestMapping("/usuario")
+public class usuarioController {
     @Autowired
-    private ClienteServices clienteserve;
+    private usuarioServices usuarioservices;
 
     @GetMapping
-    public List<ClienteDto> findAll() {
-        List<ClienteDto> result = clienteserve.findAll();
+    public List<usuarioDto> findAll() {
+        List<usuarioDto> result = usuarioservices.findAll();
         return result;
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> findById(@PathVariable Long id) {
-        ClienteDto resl = clienteserve.findById(id);
+    public ResponseEntity<usuarioDto> findById(@PathVariable Long id) {
+        usuarioDto resl = usuarioservices.findById(id);
         return ResponseEntity.ok().body(resl);
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDto> insert(@RequestBody ClienteDto dto) {
-        ClienteDto createdDto = clienteserve.insert(dto);
+    public ResponseEntity<usuarioDto> insert(@RequestBody usuarioDto dto) {
+        usuarioDto createdDto = usuarioservices.insert(dto);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> update(@PathVariable Long id, @RequestBody ClienteDto dto ) {
-        ClienteDto createdDto = clienteserve.update(dto,id);
+    public ResponseEntity<usuarioDto> update(@PathVariable Long id, @RequestBody usuarioDto dto) {
+        usuarioDto createdDto = usuarioservices.update(dto, id);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> delectar(@PathVariable Long id) {
-         clienteserve.deletar(id);
+    public ResponseEntity<usuarioDto> delectar(@PathVariable Long id) {
+        usuarioservices.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 }

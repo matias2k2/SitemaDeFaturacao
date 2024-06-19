@@ -33,5 +33,11 @@ public class ItensFaturaDto {
         this.preco_unitari = ItensFaturas.getPreco_unitari();
         this.subtotal = ItensFaturas.getSubtotal();
     }
+    public ItensFaturaDto() {
+    }
+    
+
+    
+    
     
 }
