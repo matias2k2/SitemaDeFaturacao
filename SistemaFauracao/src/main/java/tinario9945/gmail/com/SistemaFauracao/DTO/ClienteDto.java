@@ -17,13 +17,14 @@ public class ClienteDto {
     private String telefone;
     private String email;
 
-    // private List<FaturaDto> faturas = new ArrayList<>();
+    private List<FaturaDto> faturas ;
     public ClienteDto(Cliente clientes) {
         this.cliente_id = clientes.getCliente_id();
         this.nome = clientes.getNome();
         this.endereco = clientes.getEndereco();
         this.telefone = clientes.getTelefone();
         this.email = clientes.getEmail();
+        this.faturas = new ArrayList<>();
     }
 
     public ClienteDto() {

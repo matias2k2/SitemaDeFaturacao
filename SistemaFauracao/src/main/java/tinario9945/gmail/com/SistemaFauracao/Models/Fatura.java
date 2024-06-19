@@ -3,6 +3,8 @@ package tinario9945.gmail.com.SistemaFauracao.Models;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,19 +34,17 @@ public class Fatura implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int fatura_id;
     
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+  
     private Instant data_emissao;
     private float total;
     
 
+    @OneToMany
+    @JoinColumn(name = "fkitensfatura_id")
+    private List<ItensFatura> itensfatura = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "cliente_id")
-    private List<Cliente> clientes = new ArrayList<>();
+
     
-    @OneToMany
-    @JoinColumn(name = "usuario_id")
-    private List<usuario> usuarios = new ArrayList<>();
 
     public Fatura() {
     }

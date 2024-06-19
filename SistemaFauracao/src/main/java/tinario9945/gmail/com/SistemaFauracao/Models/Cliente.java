@@ -1,11 +1,15 @@
 package tinario9945.gmail.com.SistemaFauracao.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +27,10 @@ public class Cliente implements Serializable{
     private String endereco;
     private String telefone;
     private String  email;
-
+    
+    @OneToMany
+    @JoinColumn(name = "fkcliente_id")
+    private List<Fatura> faturas = new ArrayList<>();
     
     @Override
     public int hashCode() {
