@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import tinario9945.gmail.com.SistemaFauracao.Models.Produtos;
+
 @Getter
 @Setter
 public class ProdutodoDTO {
@@ -21,10 +22,13 @@ public class ProdutodoDTO {
         this.nameProdutos = entity.getNameProdutos();
         this.Descricao = entity.getDescricao();
         this.preco = entity.getPreco();
-        this.itensfatura= new ArrayList<>();
+        this.itensfatura = new ArrayList<>();
     }
 
-    public ProdutodoDTO() {
+    public ProdutodoDTO(Produtos entity, List<ItensFaturaDto> itensfatura) {
+        this(entity);  
+        this.itensfatura = itensfatura;
     }
+    public ProdutodoDTO(){}
 
 }

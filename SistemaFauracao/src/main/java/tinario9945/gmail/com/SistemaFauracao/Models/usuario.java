@@ -2,7 +2,9 @@ package tinario9945.gmail.com.SistemaFauracao.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import tinario9945.gmail.com.SistemaFauracao.Models.tokenAcs.userTokens;
 
 @Entity
 @Table(name = "usuarios")
@@ -26,6 +29,11 @@ public class usuario implements Serializable{
     private String nome ;
     private String email;
     private String senha;
+
+    @OneToMany
+    @JoinColumn(name = "fkusuario_id")
+    private List<userTokens> usertokens= new ArrayList<>();
+    
 
     @OneToMany
     @JoinColumn(name = "fkusuario_id")
@@ -52,9 +60,5 @@ public class usuario implements Serializable{
             return false;
         return true;
     }
-
-    
-
-
 
 }

@@ -31,4 +31,10 @@ public class ClienteDto {
 
     }
 
+    public ClienteDto(Cliente clientes,List<FaturaDto> faturas) {
+        this(clientes);
+        this.faturas = faturas;
+    }
+    
+
 }

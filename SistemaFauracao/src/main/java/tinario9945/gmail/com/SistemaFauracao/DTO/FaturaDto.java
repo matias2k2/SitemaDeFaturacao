@@ -18,7 +18,7 @@ public class FaturaDto {
     private int fatura_id;
     private Instant data_emissao;
     private float total;
-   private List<ItensFatura> itensfatura;
+    private List<ItensFatura> itensfatura;
 
     public FaturaDto(Fatura fatura) {
         this.fatura_id = fatura.getFatura_id();
@@ -36,5 +36,7 @@ public class FaturaDto {
             this.itensfatura.addAll(itensfatura);  
         }
     }
+
+    public FaturaDto(){}
 
 }
