@@ -36,24 +36,19 @@ public class Fatura implements Serializable{
     
   
     private Instant data_emissao;
-    private float total;
-    
-
-    @OneToMany
-    @JoinColumn(name = "fkitensfatura_id")
-    private List<ItensFatura> itensfatura = new ArrayList<>();
-
-
-    
+    private float valorTotal;
+    private int quantidade;
 
     public Fatura() {
     }
 
-    public Fatura(int fatura_id, Instant data_emissao, float total) {
+    public Fatura(int fatura_id, Instant data_emissao, float valorTotal, int quantidade) {
         this.fatura_id = fatura_id;
         this.data_emissao = data_emissao;
-        this.total = total;
+        this.valorTotal = valorTotal;
+        this.quantidade = quantidade;
     }
+
 
     
 

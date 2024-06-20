@@ -30,8 +30,8 @@ public class Produtos implements Serializable    {
     private double preco;
     
     @OneToMany
-    @JoinColumn(name = "fkprodutos_id")
-    private List<ItensFatura> itensfatura = new ArrayList<>();
+    @JoinColumn(name = "fkproduto_id")
+    private List<Fatura> faturas = new ArrayList<>();
 
     //hashcode
     @Override

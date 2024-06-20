@@ -1,7 +1,7 @@
 package tinario9945.gmail.com.SistemaFauracao.Services;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import tinario9945.gmail.com.SistemaFauracao.DTO.ClienteDto;
+
 import tinario9945.gmail.com.SistemaFauracao.DTO.FaturaDto;
 import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
 import tinario9945.gmail.com.SistemaFauracao.Repository.FaturaRepository;
@@ -37,7 +37,9 @@ public class FaturaServices {
     public FaturaDto insert(FaturaDto dto)
     {   
         Fatura faturas = new Fatura();
-        faturas.setTotal(dto.getTotal());
+        faturas.setData_emissao(dto.getData_emissao());
+        faturas.setQuantidade(dto.getQuantidade());
+        faturas.setValorTotal(dto.getValorTotal());
         faturas =faturasrepository.save(faturas);
         return new FaturaDto(faturas);
     }
@@ -47,7 +49,9 @@ public class FaturaServices {
         Fatura fatura = faturasrepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Fatura não encontrada com id: " + id));
 
-        fatura.setTotal(dto.getTotal());
+        fatura.setData_emissao(dto.getData_emissao());
+        fatura.setQuantidade(dto.getQuantidade());
+        fatura.setValorTotal(dto.getValorTotal());
 
         fatura = faturasrepository.save(fatura);
         return new FaturaDto(fatura);
