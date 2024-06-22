@@ -7,6 +7,8 @@ import { LoginfromComponent } from './Components/loginfrom/loginfrom.component';
 import { SiginComponent } from './Components/sigin/sigin.component';
 import { HomeComponent } from './Components/home/home.component';
 import { FromularioComponent } from './Components/fromulario/fromulario.component';
+import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { FromularioComponent } from './Components/fromulario/fromulario.componen
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

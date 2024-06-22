@@ -1,1 +1,130 @@
-<p>home works!</p>
+<body>
+  <nav id="sidebar">
+    <div id="sidebar_content">
+      <div id="user">
+        <img src="/assets//img/cadatro.png" id="user_avatar" alt="Avatar">
+
+        <p id="user_infos">
+          <span class="item-description">
+            {{userName}}
+          </span>
+          <span class="item-description">
+            Lorem Ipsum
+          </span>
+        </p>
+      </div>
+
+      <ul id="side_items">
+        <li class="side-item active">
+          <a (click)="accaoSerRealizado('Dashboard')">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="item-description">
+
+              Dashboard
+            </span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Usuários')">
+            <i class="fa-solid fa-user"></i>
+            <span class="item-description">
+              Usuários
+            </span>
+          </a>
+        </li>
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Cria Categorias')">
+            <i class="fa-solid fa-user"></i>
+            <span class="item-description">
+              Cria Categorias
+            </span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Compra')">
+            <i class="fa-solid fa-bell"></i>
+            <span class="item-description">
+              Compra
+            </span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Registar Produtos')">
+            <i class="fa-solid fa-box"></i>
+            <span class="item-description">
+              Registar Produtos
+            </span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Relatorio de venda')">
+            <i class="fa-solid fa-image"></i>
+            <span class="item-description">
+              Relatorio de venda
+            </span>
+          </a>
+        </li>
+
+        <li class="side-item">
+          <a (click)="accaoSerRealizado('Configurações',$event)">
+            <i class="fa-solid fa-gear"></i>
+            <span class="item-description">
+              Configurações
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <button id="open_btn">
+        <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div id="logout">
+      <button id="logout_btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="item-description">
+          Logout
+        </span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container-fluid text">
+      <h1>Sistema de Faturação</h1>
+    </div>
+    <div class="p" *ngIf="exibir">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque nulla molestias enim obcaecati ad commodi nam molestiae veniam.
+    </div>
+    <div>
+      <div>
+        <form (ngSubmit)="addcategoria()">
+          <div class="m-3">
+            <div class="form-group row">
+              <label class="col-form-label col-sm-4">Nome da Categoria:</label>
+              <div class="col-sm-8">
+                <input type="text" placeholder="Categoria" class="form-control" name="nome" [(ngModel)]="catigoriaOBJ.nome" required />
+              </div>
+            </div>
+            <div class="text-center p-3">
+              <button type="submit" class="btn btn-primary">Validar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+  <script>
+    document.getElementById('open_btn').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('open-sidebar');
+    });
+  </script>
+</body>
+<h1>  {{catigoriaOBJ | json}}</h1>

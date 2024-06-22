@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+#user_avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+
+  background-color: #A9D9D0;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #038C7F;
+  height: 100vh;
+  border-radius: 0px 18px 18px 0px;
+}
+
+#sidebar_content {
+  padding: 12px;
+}
+
+#side_items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+#user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+#user_infos {
+  display: flex;
+  flex-direction: column;
+}
+
+#user_infos span:last-child {
+  color: #0D0D0D;
+  font-size: 12px;
+}
+
+.side-item {
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.side-item.active {
+  background-color: #A9D9D0;
+}
+
+.side-item:hover:not(.active),
+#logout_btn:hover {
+  background-color: #e3e9f7;
+}
+
+.side-item a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F2E7DC;
+}
+
+.side-item.active a {
+  color: #e3e9f7;
+}
+
+.side-item a i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+#logout {
+  border-top: 1px solid #e3e9f7;
+  padding: 12px;
+}
+
+#logout_btn {
+  border: none;
+  padding: 12px;
+  font-size: 14px;
+  color: #fff;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-radius: 8px;
+  text-align: start;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.side-item:hover:not(.active),
+#logout_btn:hover {
+  background-color: #F2C12E;
+}
+
+#open_btn {
+  position: absolute;
+  top: 30px;
+  right: -10px;
+  background-color: #4f46e5;
+  color: #e3e9f7;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+main {
+  padding: 20px;
+
+  .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 1000px;
+
+    h1 {
+      text-align: center;
+      color: #F2E7DC;
+    }
+  }
+
+}
