@@ -3,7 +3,7 @@ import { Marcas } from "./Marcas";
 export interface Categoria {
   id?: number;
   name: string;
-  marcas?: any[];
+  marcas_id?: number; 
 
 
 }

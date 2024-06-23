@@ -9,6 +9,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { FromularioComponent } from './Components/fromulario/fromulario.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MarcasComponent } from './Components/marcas/marcas.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginfromComponent,
     SiginComponent,
     HomeComponent,
-    FromularioComponent
+    FromularioComponent,
+    MarcasComponent
   ],
   imports: [
     BrowserModule,

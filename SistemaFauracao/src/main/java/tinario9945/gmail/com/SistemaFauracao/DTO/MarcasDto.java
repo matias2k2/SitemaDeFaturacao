@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import tinario9945.gmail.com.SistemaFauracao.Models.Marcas;
 
 
 @Getter
@@ -15,6 +16,16 @@ public class MarcasDto {
   
     private Integer id;
     private String nome;
-    private Set<CatigoriaDto> categorias;
+
+    // Construtor que recebe uma entidade Marcas
+    public MarcasDto(Marcas marcas) {
+        this.id = marcas.getId();
+        this.nome = marcas.getNome();
+    }
+
+    public MarcasDto() {
+    }
+    
+
  
 }

@@ -99,23 +99,40 @@
       <h1>Sistema de Faturação</h1>
     </div>
     <div class="p" *ngIf="exibir">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque nulla molestias enim obcaecati ad commodi nam molestiae veniam.
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque nulla molestias enim obcaecati ad commodi nam
+      molestiae veniam.
     </div>
     <div>
       <div>
-        <form #cadastroFrom="ngForm"   (ngSubmit)="addcategoria()">
-          <div class="m-3">
-            <div class="form-group row">
-              <label class="col-form-label col-sm-4">Nome da Categoria:</label>
-              <div class="col-sm-8">
-                <input type="text" placeholder="Categoria" class="form-control" name="nome" [(ngModel)]="catigoriaOBJ.name" required />
-              </div>
+        <app-marcas></app-marcas>
+        <div class="marca">
+          <form [formGroup]="marcaForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="nome">Nome da Marca:</label>
+              <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Digite o nome da marca" required>
+
             </div>
-            <div class="text-center p-3">
-              <button type="submit" class="btn btn-primary">Validar</button>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!marcaForm.valid">Adicionar Marca</button>
+          </form>
+
+        </div>
+
+
+        <div *ngIf="marcaCarregada">
+          <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Nome da Categoria:</label>
+              <input type="text" id="name" formControlName="name" class="form-control"
+                placeholder="Digite o nome da categoria" required>
             </div>
-          </div>
-        </form>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!categoriaForm.valid">Adicionar Categoria</button>
+          </form>
+        </div>
+
+
+
       </div>
     </div>
   </main>
@@ -127,4 +144,4 @@
     });
   </script>
 </body>
-<h1>  {{catigoriaOBJ | json}}</h1>
+<h1> {{catigoriaOBJ | json}}</h1>
