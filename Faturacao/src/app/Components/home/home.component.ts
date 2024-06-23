@@ -15,7 +15,11 @@ export class HomeComponent {
   userName: String = '';
   //Variavel para visiblidade
   categorias: Categoria[] = [];
-  catigoriaOBJ = new Categoria();
+  catigoriaOBJ : Categoria =
+  {
+    name: '',
+    marcas: [],
+  }
 
 
 
@@ -42,13 +46,12 @@ export class HomeComponent {
     );
   }
   addcategoria(): void {
-    this.servico.addCategoria(this.catigoriaOBJ).subscribe(
-      retorno => {
-        this.categorias.push(retorno);
-        this.catigoriaOBJ = new Categoria(); // Limpar o formulário após adicionar
-      },
-      error => console.error(error)
-    );
+      this.servico.addcategoria(this.catigoriaOBJ).subscribe(
+        () => {
+          alert('Profissional cadastrado com sucesso');
+        },
+        error => console.error('Erro ao adicionar profissional', error)
+      )
   }
 
 

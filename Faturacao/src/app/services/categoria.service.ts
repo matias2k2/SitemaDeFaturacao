@@ -13,11 +13,12 @@ export class CategoriaService {
   constructor(private http: HttpClient) {
 
   }
-  addCategoria(obj : Categoria):Observable<Categoria>{
-      return this.http.post<Categoria>(this.apiUrl,obj);
+
+  findAll():Observable<Categoria[]>{
+    return this.http.get<Categoria[]>(`${this.apiUrl}/categoria`);
+  }
+  addcategoria(obj:Categoria):Observable<void>{
+    return this.http.post<void>(`${this.apiUrl}/categoria`, obj);
   }
 
-  findAll(): Observable<Categoria[]>{
-    return this.http.get<Categoria[]>(this.apiUrl);
-  }
 }

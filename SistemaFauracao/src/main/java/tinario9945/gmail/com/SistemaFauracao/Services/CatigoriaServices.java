@@ -25,6 +25,8 @@ public class CatigoriaServices {
     public CatigoriaDto insert(CatigoriaDto dto) {
         Catigoria entity = new Catigoria();
         entity.setName(dto.getName());
+        
+        
         entity = repository.save(entity);
         return new CatigoriaDto(entity);
     }

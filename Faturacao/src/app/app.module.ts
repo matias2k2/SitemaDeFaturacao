@@ -8,7 +8,8 @@ import { SiginComponent } from './Components/sigin/sigin.component';
 import { HomeComponent } from './Components/home/home.component';
 import { FromularioComponent } from './Components/fromulario/fromulario.component';
 import {HttpClientModule} from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
