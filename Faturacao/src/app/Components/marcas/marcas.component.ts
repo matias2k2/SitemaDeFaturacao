@@ -18,19 +18,23 @@ export class MarcasComponent {
     });
   }
 
+
+
   onSubmitMacacao(): void {
-    const marcaData: Marcas = {
-      nome: this.marcaForm.value.nome
-    };
-    this.marcasServicos.adicionarMarca(marcaData).subscribe(
-      response => {
-        console.log('Marca adicionada com sucesso:', response);
-        // Lógica adicional se necessário (por exemplo, resetar o formulário)
-      },
-      error => {
-        console.error('Erro ao adicionar marca:', error);
-      }
-    );
+    if (this.marcaForm.valid) {
+      const marcaData: Marcas = {
+        nome: this.marcaForm.value.nome
+      };
+      this.marcasServicos.adicionarMarca(marcaData).subscribe(
+        response => {
+          console.log('Marca adicionada com sucesso:', response);
+          // Lógica adicional se necessário (por exemplo, resetar o formulário)
+        },
+        error => {
+          console.error('Erro ao adicionar marca:', error);
+        }
+      );
+    }
   }
 }
 

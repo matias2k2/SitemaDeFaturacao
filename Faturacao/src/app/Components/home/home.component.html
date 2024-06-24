@@ -103,38 +103,25 @@
       molestiae veniam.
     </div>
     <div>
-      <div>
-        <app-marcas></app-marcas>
-        <div class="marca">
-          <form [formGroup]="marcaForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label for="nome">Nome da Marca:</label>
-              <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Digite o nome da marca" required>
 
-            </div>
+     <app-marcas></app-marcas>
 
-            <button type="submit" class="btn btn-primary" [disabled]="!marcaForm.valid">Adicionar Marca</button>
-          </form>
+      <div >
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Nome da Categoria:</label>
+            <input type="text" id="name" formControlName="name" class="form-control"
+              placeholder="Digite o nome da categoria" required>
+          </div>
 
-        </div>
-
-
-        <div *ngIf="marcaCarregada">
-          <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label for="name">Nome da Categoria:</label>
-              <input type="text" id="name" formControlName="name" class="form-control"
-                placeholder="Digite o nome da categoria" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary" [disabled]="!categoriaForm.valid">Adicionar Categoria</button>
-          </form>
-        </div>
-
-
-
+          <button type="submit" class="btn btn-primary" [disabled]="!categoriaForm.valid">Adicionar Categoria</button>
+        </form>
       </div>
+
+
+
     </div>
+
   </main>
 
 

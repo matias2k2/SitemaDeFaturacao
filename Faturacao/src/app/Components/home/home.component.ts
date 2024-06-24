@@ -84,15 +84,14 @@ export class HomeComponent {
     if (this.categoriaForm.valid) {
       const categoriaData: Categoria = {
         name: this.categoriaForm.value.name,
-        marcas_id: this.marcas.length // Use o valor selecionado do campo marcas_id
+        marcas_id: this.marcas.length
       };
-
       this.servico.addcategoria(categoriaData).subscribe(
+
         response => {
+          console.log(categoriaData)
           console.log('Categoria adicionada com sucesso:', response);
-          this.marcaRegistrada = true; // Marca como registrada com sucesso para mostrar mensagem
           // Lógica adicional se necessário (por exemplo, resetar o formulário)
-          this.categoriaForm.reset();
         },
         error => {
           console.error('Erro ao adicionar categoria:', error);
@@ -100,21 +99,6 @@ export class HomeComponent {
       );
     }
   }
-  onSubmitMacacao(): void {
-    const marcaData: Marcas = {
-      nome: this.marcaForm.value.nome
-    };
-    this.marcaCarregada = true;
-    this.marcasServicos.adicionarMarca(marcaData).subscribe(
-      response => {
-        console.log('Marca adicionada com sucesso:', response);
-        this.marcaCarregada = true; // Atualizar para true após adição bem-sucedida
-      },
-      error => {
-        console.error('Erro ao adicionar marca:', error);
-      }
 
-    );
-  }
 
 }
