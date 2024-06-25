@@ -82,4 +82,15 @@ public class ProdutosSevices {
 
         return null;
     }
+    /* 
+    @Transactional
+    public ProdutodoDTO findByName(String name) {
+        Produtos entity = produtosrepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+        return new ProdutodoDTO(entity);
+    }
+    */
+
+    
+
 }

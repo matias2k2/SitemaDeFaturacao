@@ -79,9 +79,15 @@ public class MarcasServices {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("Integridade inválida");
         }
-        
-        return  null;
 
+        return null;
+
+    }
+
+    public MarcasDto findByName(String name) {
+        Optional<Marcas> obj = repository.findByNome(name);
+        Marcas entity = obj.orElseThrow(() -> new EntityNotFoundException("Marca não encontrada"));
+        return new MarcasDto(entity);
     }
 
 }

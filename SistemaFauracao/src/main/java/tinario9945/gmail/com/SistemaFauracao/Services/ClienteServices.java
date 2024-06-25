@@ -80,13 +80,19 @@ public class ClienteServices {
         } catch (EmptyResultDataAccessException e) {
             // Lança uma exceção personalizada se o cliente não for encontrado
             throw new UnsupportedOperationException("Unimplemented method 'deletar'");
-        }
-        catch(DataIntegrityViolationException e)
-        {
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("Integridade inválida");
         }
-        
-        return  null;
+
+        return null;
     }
+    /* 
+    @Transactional
+    public ClienteDto findByName(String name) {
+        Cliente entity = clientesrepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+        return new ClienteDto(entity);
+    }
+        */
 
 }

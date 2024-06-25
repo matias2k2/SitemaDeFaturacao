@@ -53,5 +53,13 @@ public class CatigoriaServices {
             throw new IllegalArgumentException("Nome de categoria duplicado: " + dto.getName());
         }
     }
+    /*
+    @Transactional
+    public CatigoriaDto findByName(String name) {
+        Catigoria entity = repository.findByName(name)
+            .orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+        return new CatigoriaDto(entity);
+    }
+     */
 
 }

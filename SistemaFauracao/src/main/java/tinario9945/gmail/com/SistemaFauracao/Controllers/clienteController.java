@@ -54,5 +54,12 @@ public class clienteController {
          clienteserve.deletar(id);
         return ResponseEntity.noContent().build();
     }
+    /* 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ClienteDto> findByName(@PathVariable String name) {
+        ClienteDto dto = clienteserve.findByName(name);
+        return ResponseEntity.ok(dto);
+    }
+    */
 
 }

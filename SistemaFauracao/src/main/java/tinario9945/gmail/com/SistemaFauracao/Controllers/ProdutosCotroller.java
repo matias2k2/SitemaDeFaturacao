@@ -53,5 +53,12 @@ public class ProdutosCotroller {
         produtoservices.deletar(id);
         return ResponseEntity.noContent().build();
     }
+    /* 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ProdutodoDTO> findByName(@PathVariable String name) {
+        ProdutodoDTO dto = produtoservices.findByName(name);
+        return ResponseEntity.ok(dto);
+    }
+    */
     
 }
