@@ -5,13 +5,15 @@ import { SiginComponent } from './Components/sigin/sigin.component';
 import { HomeComponent } from './Components/home/home.component';
 import { DashbordComponent } from './Components/dashbord/dashbord.component';
 import { ProdutosComponent } from './Components/produtos/produtos.component';
+import { InicioComponent } from './Components/inicio/inicio.component';
 
 const routes: Routes = [
     {path : 'login', component : LoginfromComponent},
     {path : 'signup', component : SiginComponent},
     {path : '', component : HomeComponent},
     {path : 'dashbor', component : DashbordComponent},
-    {path : 'produtos', component : ProdutosComponent}
+    {path : 'produtos', component : ProdutosComponent},
+    {path : 'inicio', component : InicioComponent}
 
 
 ];

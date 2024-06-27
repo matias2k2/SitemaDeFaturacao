@@ -12,6 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarcasComponent } from './Components/marcas/marcas.component';
 import { DashbordComponent } from './Components/dashbord/dashbord.component';
 import { ProdutosComponent } from './Components/produtos/produtos.component';
+import { ListaProdutosComponent } from './Components/lista-produtos/lista-produtos.component';
+import { HeaderComponent } from './Components/header/header/header.component';
+import { InicioComponent } from './Components/inicio/inicio.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { ProdutosComponent } from './Components/produtos/produtos.component';
     FromularioComponent,
     MarcasComponent,
     DashbordComponent,
-    ProdutosComponent
+    ProdutosComponent,
+    ListaProdutosComponent,
+    HeaderComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
