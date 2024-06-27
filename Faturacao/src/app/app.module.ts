@@ -10,6 +10,8 @@ import { FromularioComponent } from './Components/fromulario/fromulario.componen
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarcasComponent } from './Components/marcas/marcas.component';
+import { DashbordComponent } from './Components/dashbord/dashbord.component';
+import { ProdutosComponent } from './Components/produtos/produtos.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { MarcasComponent } from './Components/marcas/marcas.component';
     SiginComponent,
     HomeComponent,
     FromularioComponent,
-    MarcasComponent
+    MarcasComponent,
+    DashbordComponent,
+    ProdutosComponent
   ],
   imports: [
     BrowserModule,

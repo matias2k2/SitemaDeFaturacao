@@ -32,7 +32,7 @@ public class faturaController {
         return faturas;
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<FaturaDto> findById(@PathVariable Long id)
+    public ResponseEntity<FaturaDto> findById(@PathVariable Integer id)
     {
         FaturaDto result = faturaservicos.findById(id);
         return ResponseEntity.ok().body(result);
@@ -44,13 +44,13 @@ public class faturaController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<FaturaDto> update(@PathVariable Long id, @RequestBody FaturaDto dto ) {
+    public ResponseEntity<FaturaDto> update(@PathVariable Integer  id, @RequestBody FaturaDto dto ) {
         FaturaDto createdDto = faturaservicos.update(id,dto);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> delectar(@PathVariable Long id) {
+    public ResponseEntity<ClienteDto> delectar(@PathVariable Integer  id) {
          faturaservicos.deletar(id);
         return ResponseEntity.noContent().build();
     }

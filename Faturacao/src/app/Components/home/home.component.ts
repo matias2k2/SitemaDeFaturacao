@@ -16,13 +16,20 @@ import { MarcasService } from 'src/app/services/marcas.service';
 export class HomeComponent {
   userName: String = '';
   //Variavel para visiblidade
+
   categoriaForm!: FormGroup;
   marcaForm!: FormGroup;
   marcaRegistrada: boolean = false; // Variável para controlar se a marca foi registrada com sucesso
   categorias: Categoria[] = [];
   marcas: Marcas[] = [];
   marcaCarregada: boolean = false;
-
+  exibir: boolean = false;
+  idFk?: number;
+  variavel: String = '';
+  isDivVisible: boolean = false;
+  isMarca: boolean = false;
+  isVenda: boolean = false;
+  isCategoria: boolean = false;
   catigoriaOBJ: Categoria =
     {
       name: '',
@@ -41,14 +48,12 @@ export class HomeComponent {
 
   }
   //Variavel Para Exibir ou mostra uma tela
-
   ngOnInit(): void {
     this.MarcaFindAll();
   }
-  exibir: boolean = false;
-  variavel: String = '';
-
-
+  toggleDiv() {
+    this.isDivVisible = !this.isDivVisible
+  }
 
   //Funcao para Exivir o Quadrado
   accaoSerRealizado(texto: string, event?: Event) {
@@ -56,13 +61,40 @@ export class HomeComponent {
       event.preventDefault();
     }
 
-    this.exibir = !this.exibir;
+    if (texto === 'Cria Categorias') {
+      this.isDivVisible = true;
+      this.isVenda=false;
+    } else if (texto === 'Resgistar venda') {
+
+      this.isVenda = true;
+    }
+    this.isDivVisible = !this.isDivVisible;
   }
-  findAll(): void {
-    this.servico.findAll().subscribe(
-      retorno => this.categorias = retorno,
-      error => console.error(error)
-    );
+
+
+  Resgistarvenda(event: Event) {
+    event.preventDefault();
+    this.isVenda = !this.isVenda;
+    
+  }
+
+  onSubmitMacacao(): void {
+    if (this.marcaForm.valid) {
+      const marcaData: Marcas = {
+        nome: this.marcaForm.value.nome
+      };
+      this.marcasServicos.adicionarMarca(marcaData).subscribe(
+        response => {
+          console.log('Marca adicionada com sucesso:', response);
+          this.isMarca = true;
+          this.isCategoria = true;
+          // Lógica adicional se necessário (por exemplo, resetar o formulário)
+        },
+        error => {
+          console.error('Erro ao adicionar marca:', error);
+        }
+      );
+    }
   }
 
   MarcaFindAll(): void {
@@ -77,14 +109,17 @@ export class HomeComponent {
       }
     );
   }
+  selecionarMarca(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.idFk = +selectElement.value; // Já temos o id da marca selecionada aqui
 
-
+  }
 
   onSubmit(): void {
     if (this.categoriaForm.valid) {
       const categoriaData: Categoria = {
         name: this.categoriaForm.value.name,
-        marcas_id: this.marcas.length
+        marcas_id: this.idFk
       };
       this.servico.addcategoria(categoriaData).subscribe(
 
@@ -98,6 +133,10 @@ export class HomeComponent {
         }
       );
     }
+  }
+
+  voltar():void{
+    this.isDivVisible =!this.isDivVisible
   }
 
 

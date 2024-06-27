@@ -12,25 +12,19 @@ import tinario9945.gmail.com.SistemaFauracao.Models.usuario;
 @Setter
 public class usuarioDto {
     
-    private int usuario_id;
-    private String nome ;
+    private Integer  id;
+    private String nome;
     private String email;
-    private String senha;
-    private List<FaturaDto> faturas;
+    private String senha; // Você pode optar por não incluir a senha no DTO por motivos de segurança
+
+    public usuarioDto(usuario entity) {
+        this.id = entity.getUsuario_id();
+        this.nome = entity.getNome();
+        this.email = entity.getEmail();
+        this.senha = entity.getSenha(); // Cuidado ao expor a senha
+    }
+
     public usuarioDto() {
-    }
-
-    public usuarioDto(usuario usuario) {
-        this.usuario_id = usuario.getUsuario_id();
-        this.nome = usuario.getNome();
-        this.email = usuario.getEmail();
-        this.senha = usuario.getSenha();
-        this.faturas = new ArrayList<>();
-    }
-
-    public usuarioDto(usuario usuario,List<FaturaDto> faturas) {
-        this(usuario);
-        this.faturas = faturas;
     }
     
     

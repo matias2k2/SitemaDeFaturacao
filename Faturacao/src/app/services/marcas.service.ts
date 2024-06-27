@@ -18,6 +18,9 @@ export class MarcasService {
   MarcasfinAll():Observable<Marcas[]>{
       return this.http.get<Marcas[]>(`${this.apiUrl}/marcas`);
   }
+  getByNome(nome: string): Observable<Marcas[]> {
+    return this.http.get<Marcas[]>(`${this.apiUrl}/marcas/nome/${nome}`);
+  }
 
   adicionarMarca(obj: Marcas):Observable<void>{
       return this.http.post<void>(`${this.apiUrl}/marcas`, obj);

@@ -32,7 +32,7 @@ public class clienteController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> findById(@PathVariable Long id) {
+    public ResponseEntity<ClienteDto> findById(@PathVariable Integer  id) {
         ClienteDto resl = clienteserve.findById(id);
         return ResponseEntity.ok().body(resl);
     }
@@ -44,13 +44,13 @@ public class clienteController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> update(@PathVariable Long id, @RequestBody ClienteDto dto ) {
+    public ResponseEntity<ClienteDto> update(@PathVariable Integer  id, @RequestBody ClienteDto dto ) {
         ClienteDto createdDto = clienteserve.update(dto,id);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ClienteDto> delectar(@PathVariable Long id) {
+    public ResponseEntity<ClienteDto> delectar(@PathVariable Integer  id) {
          clienteserve.deletar(id);
         return ResponseEntity.noContent().build();
     }

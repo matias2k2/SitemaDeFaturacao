@@ -29,7 +29,7 @@ public class ClienteServices {
     }
 
     @Transactional
-    public ClienteDto findById(Long id) {
+    public ClienteDto findById(Integer id) {
         Optional<Cliente> obj = clientesrepository.findById(id);
         Cliente entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade nao encontrada"));
         return new ClienteDto(entity);
@@ -47,7 +47,7 @@ public class ClienteServices {
     }
 
     @Transactional
-    public ClienteDto update(ClienteDto dto, Long id) {
+    public ClienteDto update(ClienteDto dto, Integer id) {
         try {
             // Tenta encontrar o cliente pelo ID
             Cliente entity = clientesrepository.findById(id)
@@ -72,7 +72,7 @@ public class ClienteServices {
     }
 
     @Transactional
-    public ClienteDto deletar(Long id) {
+    public ClienteDto deletar(Integer id) {
         try {
 
             clientesrepository.deleteById(id);

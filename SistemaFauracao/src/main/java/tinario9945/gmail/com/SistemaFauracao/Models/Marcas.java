@@ -20,16 +20,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="Marcas")
+@Table(name = "Marcas")
 public class Marcas {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(length = 45,nullable = false,unique = true)
+
+    @Column(length = 45, nullable = false, unique = true)
     private String nome;
 
-   // aqui esta a fazer um relacionamento 1---muitos
-   @OneToMany(mappedBy = "marcas")
-   private List<Catigoria> catigoria = new ArrayList<>();
+    @OneToMany(mappedBy = "marca")
+    private List<Catigoria> categorias = new ArrayList<>();
+
+    @OneToMany(mappedBy = "marca")
+    private List<Produtos> produtos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "marca")
+    private List<Fatura> faturas = new ArrayList<>();
 
 }

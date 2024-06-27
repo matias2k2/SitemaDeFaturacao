@@ -3,6 +3,7 @@ package tinario9945.gmail.com.SistemaFauracao.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.persistence.EntityNotFoundException;
+import tinario9945.gmail.com.SistemaFauracao.DTO.MarcasDto;
 import tinario9945.gmail.com.SistemaFauracao.DTO.usuarioDto;
 import tinario9945.gmail.com.SistemaFauracao.Services.usuarioServices;
 
@@ -29,7 +33,7 @@ public class usuarioController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<usuarioDto> findById(@PathVariable Long id) {
+    public ResponseEntity<usuarioDto> findById(@PathVariable Integer  id) {
         usuarioDto resl = usuarioservices.findById(id);
         return ResponseEntity.ok().body(resl);
     }
@@ -41,14 +45,24 @@ public class usuarioController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<usuarioDto> update(@PathVariable Long id, @RequestBody usuarioDto dto) {
+    public ResponseEntity<usuarioDto> update(@PathVariable Integer id, @RequestBody usuarioDto dto) {
         usuarioDto createdDto = usuarioservices.update(dto, id);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<usuarioDto> delectar(@PathVariable Long id) {
+    public ResponseEntity<usuarioDto> delectar(@PathVariable Integer  id) {
         usuarioservices.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<usuarioDto> getusuarioByNome(@PathVariable String nome) {
+        try {
+            usuarioDto user = usuarioservices.findByName(nome);
+            return ResponseEntity.ok(user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrada", e);
+        }
     }
 }

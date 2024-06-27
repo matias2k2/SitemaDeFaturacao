@@ -31,7 +31,7 @@ public class ProdutosCotroller {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProdutodoDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ProdutodoDTO> findById(@PathVariable Integer  id) {
         ProdutodoDTO resl = produtoservices.findById(id);
         return ResponseEntity.ok().body(resl);
     }
@@ -43,13 +43,13 @@ public class ProdutosCotroller {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProdutodoDTO> update(@PathVariable Long id, @RequestBody ProdutodoDTO dto) {
+    public ResponseEntity<ProdutodoDTO> update(@PathVariable Integer  id, @RequestBody ProdutodoDTO dto) {
         ProdutodoDTO createdDto = produtoservices.update(dto, id);
         return ResponseEntity.ok().body(createdDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ProdutodoDTO> delectar(@PathVariable Long id) {
+    public ResponseEntity<ProdutodoDTO> delectar(@PathVariable Integer  id) {
         produtoservices.deletar(id);
         return ResponseEntity.noContent().build();
     }

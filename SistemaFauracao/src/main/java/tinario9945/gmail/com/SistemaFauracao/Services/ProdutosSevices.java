@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import tinario9945.gmail.com.SistemaFauracao.DTO.ProdutodoDTO;
+import tinario9945.gmail.com.SistemaFauracao.Models.Catigoria;
+import tinario9945.gmail.com.SistemaFauracao.Models.Marcas;
 import tinario9945.gmail.com.SistemaFauracao.Models.Produtos;
+import tinario9945.gmail.com.SistemaFauracao.Repository.CatigoriaRepository;
+import tinario9945.gmail.com.SistemaFauracao.Repository.MarcasRepository;
 import tinario9945.gmail.com.SistemaFauracao.Repository.ProdutosRepository;
 
 @Service
@@ -20,6 +24,10 @@ public class ProdutosSevices {
 
     @Autowired
     private ProdutosRepository produtosrepository;
+    @Autowired
+    private CatigoriaRepository repositoryCategoria;
+    @Autowired
+    private MarcasRepository repositoryMarcas;
 
     public List<ProdutodoDTO> findAll() {
         List<Produtos> result = produtosrepository.findAll();
@@ -28,7 +36,7 @@ public class ProdutosSevices {
     }
 
     @Transactional
-    public ProdutodoDTO findById(Long id) {
+    public ProdutodoDTO findById(Integer id) {
         Optional<Produtos> obj = produtosrepository.findById(id);
         Produtos entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade nao encontrada"));
         return new ProdutodoDTO(entity);
@@ -36,39 +44,47 @@ public class ProdutosSevices {
 
     @Transactional
     public ProdutodoDTO insert(ProdutodoDTO dto) {
+        Marcas marcas = new Marcas();
         Produtos entity = new Produtos();
-        entity.setNameProdutos(dto.getNameProdutos());
-        entity.setDescricao(dto.getDescricao());
+        Catigoria categoria = new Catigoria();
+
+        entity.setNomeProduto(dto.getNomeProduto());
+
         entity.setPreco(dto.getPreco());
+        if (dto != null) {
+            // Buscar as entidades de Marca e Categoria pelo ID
+            marcas = repositoryMarcas.findById(dto.getMarcaId())
+                    .orElseThrow(() -> new RuntimeException("Marca não encontrada"));
+            categoria = repositoryCategoria.findById(dto.getCategoriaId())
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+            entity.setMarca(marcas);
+            entity.setCategoria(categoria);
+
+        }
         entity = produtosrepository.save(entity);
         return new ProdutodoDTO(entity);
     }
 
     @Transactional
-    public ProdutodoDTO update(ProdutodoDTO dto, Long id) {
+    public ProdutodoDTO update(ProdutodoDTO dto, Integer id) {
         try {
-            // Tenta encontrar o cliente pelo ID
             Produtos entity = produtosrepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+                    .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com ID: " + id));
 
-            // Atualiza os campos do cliente
-            entity.setNameProdutos(dto.getNameProdutos());
-            entity.setDescricao(dto.getDescricao());
+            entity.setNomeProduto(dto.getNomeProduto());
             entity.setPreco(dto.getPreco());
-            // Salva as alterações no banco de dados
-            entity = produtosrepository.save(entity);
 
-            // Retorna o cliente atualizado como um ClienteDto
+            entity = produtosrepository.save(entity);
             return new ProdutodoDTO(entity);
 
         } catch (EntityNotFoundException e) {
-            // Lança uma exceção personalizada ou trata o erro de outra forma
-            throw new RuntimeException("Erro ao atualizar cliente: " + e.getMessage());
+            throw new RuntimeException("Erro ao atualizar produto: " + e.getMessage());
         }
     }
 
     @Transactional
-    public ProdutodoDTO deletar(Long id) {
+    public ProdutodoDTO deletar(Integer id) {
         try {
 
             produtosrepository.deleteById(id);
@@ -82,15 +98,5 @@ public class ProdutosSevices {
 
         return null;
     }
-    /* 
-    @Transactional
-    public ProdutodoDTO findByName(String name) {
-        Produtos entity = produtosrepository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
-        return new ProdutodoDTO(entity);
-    }
-    */
-
-    
 
 }

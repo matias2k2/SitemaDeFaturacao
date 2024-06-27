@@ -35,31 +35,18 @@ public class CatigoriaServices {
     @Transactional
     public CatigoriaDto insert(CatigoriaDto dto) {
         Catigoria entity = new Catigoria();
-        entity.setName(dto.getName());
+        entity.setNome(dto.getNome());
 
-        Optional<Marcas> marcasOpt = marcasRepository.findById(dto.getMarcasId());
+        // Busca a marca associada pelo ID
+        Marcas marca = marcasRepository.findById(dto.getMarcaId())
+                .orElseThrow(() -> new RuntimeException("Marca não encontrada com ID: " + dto.getMarcaId()));
 
-        if (marcasOpt.isPresent()) {
-            entity.setMarcas(marcasOpt.get());
-        } else {
-            throw new EntityNotFoundException("Marca não encontrada com o ID: " + dto.getMarcasId());
-        }
+        entity.setMarca(marca); // Define a marca na entidade Catigoria
 
-        try {
-            entity = repository.save(entity);
-            return new CatigoriaDto(entity);
-        } catch (DataIntegrityViolationException e) {
-            // Tratar exceção de violação de integridade (ex: registro duplicado)
-            throw new IllegalArgumentException("Nome de categoria duplicado: " + dto.getName());
-        }
-    }
-    /*
-    @Transactional
-    public CatigoriaDto findByName(String name) {
-        Catigoria entity = repository.findByName(name)
-            .orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+        // Salva a entidade no repositório
+        entity = repository.save(entity);
+
         return new CatigoriaDto(entity);
     }
-     */
 
 }

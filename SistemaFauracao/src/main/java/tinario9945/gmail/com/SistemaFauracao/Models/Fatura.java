@@ -13,44 +13,65 @@ import org.hibernate.mapping.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name ="Faturas")
+@Table(name = "Faturas")
 @Getter
 @Setter
-public class Fatura implements Serializable{
-  
-    private static final long serialVersionUID =1L;
-    
-    @Id 
+public class Fatura implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int fatura_id;
-    
-  
-    private Instant data_emissao;
+    private Integer id;
+
+    private Instant dataEmissao;
     private float valorTotal;
     private int quantidade;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id", nullable = false)
+    private Produtos produto;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Catigoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "marca_id", nullable = false)
+    private Marcas marca;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private usuario usuario;
 
     public Fatura() {
     }
 
-    public Fatura(int fatura_id, Instant data_emissao, float valorTotal, int quantidade) {
-        this.fatura_id = fatura_id;
-        this.data_emissao = data_emissao;
+    public Fatura(Integer id, Instant dataEmissao, float valorTotal, int quantidade, Produtos produto, Cliente cliente,
+            Catigoria categoria, Marcas marca) {
+        this.id = id;
+        this.dataEmissao = dataEmissao;
         this.valorTotal = valorTotal;
         this.quantidade = quantidade;
+        this.produto = produto;
+        this.cliente = cliente;
+        this.categoria = categoria;
+        this.marca = marca;
     }
 
-
-    
-
-    
 }

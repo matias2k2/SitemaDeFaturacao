@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import tinario9945.gmail.com.SistemaFauracao.DTO.ClienteDto;
+
 import tinario9945.gmail.com.SistemaFauracao.DTO.usuarioDto;
-import tinario9945.gmail.com.SistemaFauracao.Models.Cliente;
+
 import tinario9945.gmail.com.SistemaFauracao.Models.usuario;
 import tinario9945.gmail.com.SistemaFauracao.Repository.usuarioRepository;
 
@@ -29,7 +30,7 @@ public class usuarioServices {
     }
 
     @Transactional
-    public usuarioDto findById(Long id) {
+    public usuarioDto findById(Integer id) {
         Optional<usuario> obj = usuariorepository.findById(id);
         usuario entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade nao encontrada"));
         return new usuarioDto(entity);
@@ -41,12 +42,13 @@ public class usuarioServices {
         entity.setNome(dto.getNome());
         entity.setSenha(dto.getSenha());
         entity.setEmail(dto.getEmail());
+       
         entity = usuariorepository.save(entity);
         return new usuarioDto(entity);
     }
 
     @Transactional
-    public usuarioDto update(usuarioDto dto, Long id) {
+    public usuarioDto update(usuarioDto dto, Integer id) {
         try {
             // Tenta encontrar o cliente pelo ID
             usuario entity = usuariorepository.findById(id)
@@ -69,7 +71,7 @@ public class usuarioServices {
     }
 
     @Transactional
-    public ClienteDto deletar(Long id) {
+    public ClienteDto deletar(Integer id) {
         try {
 
             usuariorepository.deleteById(id);
@@ -84,6 +86,13 @@ public class usuarioServices {
         return null;
     }
 
+    public usuarioDto findByName(String name) {
+        Optional<usuario> obj = usuariorepository.findByNome(name);
+        usuario entity = obj.orElseThrow(() -> new EntityNotFoundException("Marca não encontrada"));
+        return new usuarioDto(entity);
+    }
 
     
+
+
 }

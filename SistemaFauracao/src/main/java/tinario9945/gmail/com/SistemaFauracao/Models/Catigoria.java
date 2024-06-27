@@ -1,6 +1,8 @@
 package tinario9945.gmail.com.SistemaFauracao.Models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -12,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,13 +27,18 @@ public class Catigoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(length = 45, nullable = false, unique = true)
-    private String name;
 
-    // Relacionamento 1 para muitos
-    // Obs : na classe onde recebe o relacioname 1 para muito de possou um arry list
+    @Column(length = 45, nullable = false, unique = true)
+    private String nome;
+
     @ManyToOne
-    @JoinColumn(name = "marcas_id")
-    private Marcas marcas;
+    @JoinColumn(name = "marca_id")
+    private Marcas marca;
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Produtos> produtos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Fatura> faturas = new ArrayList<>();
 
 }
