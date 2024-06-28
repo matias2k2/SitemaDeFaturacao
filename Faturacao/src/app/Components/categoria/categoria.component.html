@@ -1,1 +1,41 @@
-<p>categoria works!</p>
+<app-header></app-header>
+<app-menu></app-menu>
+<main class="container-fluid">
+  <nav class="container">
+    <div class="marca">
+
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="marcas_id">Marca:</label>
+            <select id="marcas_id" formControlName="marcas_id" class="form-control" required
+              (change)="selecionarMarca($event)">
+              <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nome }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name">Nome da Categoria:</label>
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Digite o nome da categoria"
+              required>
+          </div>
+          <div class="produtoEx">
+            <div class="itens">
+              <img src="/assets/img/comput.png" alt="">
+
+            </div>
+            <div class="itens">
+              <img src="/assets/img/card1.png" alt="">
+              <h1></h1>
+            </div>
+            <div class="itens">
+              <img src="/assets/img/compre.png" alt="">
+              <h1></h1>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!categoriaForm.valid">Adicionar
+            Categoria</button>
+        </form>
+      </div>
+      
+  </nav>
+
+</main>

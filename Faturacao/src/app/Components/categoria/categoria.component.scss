@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;500;600&display=swap');
+
+.produtoEx {
+  display: flex;
+  /* Torna as .itens flexíveis na mesma linha */
+  justify-content: space-around;
+  /* Distribui as .itens com espaço entre elas */
+  margin-top: 10px;
+  /* Ajuste conforme necessário */
+}
+
+label {
+  color: #ED7947;
+}
+
+.itens {
+  width: 350px;
+  height: 350px;
+  border-radius: 13px;
+  /* Corrigido: o border-radius não deve ter "solid black" */
+  background: #fff;
+  text-align: center;
+  /* Centraliza o conteúdo */
+  padding: 20px;
+  /* Ajuste conforme necessário */
+}
+
+img {
+  width: 250px;
+  height: 250px;
+  /* Ajuste conforme necessário */
+}
+
+.marca {
+  width: 90%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #0E1B28;
+  ;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  button {
+    background-color: #00aaff;
+    color: #ED7947;
+    cursor: pointer;
+  }
+
+  button {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+}

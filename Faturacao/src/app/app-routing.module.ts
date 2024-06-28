@@ -7,6 +7,8 @@ import { DashbordComponent } from './Components/dashbord/dashbord.component';
 import { ProdutosComponent } from './Components/produtos/produtos.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { MarcasComponent } from './Components/marcas/marcas.component';
+import { CategoriaComponent } from './Components/categoria/categoria.component';
+import { FromularioComponent } from './Components/fromulario/fromulario.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginfromComponent },
@@ -15,7 +17,9 @@ const routes: Routes = [
   { path: 'dashbor', component: DashbordComponent },
   { path: 'produtos', component: ProdutosComponent },
   { path: 'inicio', component: InicioComponent },
-  { path: 'marca', component: MarcasComponent}
+  { path: 'marca', component: MarcasComponent },
+  { path: 'categoria', component: CategoriaComponent },
+  { path: 'formulario', component: FromularioComponent },
 ];
 
 
