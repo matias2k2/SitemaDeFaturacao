@@ -1,5 +1,6 @@
 package tinario9945.gmail.com.SistemaFauracao.DTO;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
 
 @Getter
 @Setter
-public class FaturaDto {
-
+public class FaturaDto implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private Instant dataEmissao;
     private float valorTotal;

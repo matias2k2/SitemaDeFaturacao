@@ -1,5 +1,6 @@
 package tinario9945.gmail.com.SistemaFauracao.DTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ import tinario9945.gmail.com.SistemaFauracao.Models.Cliente;
 
 @Getter
 @Setter
-public class ClienteDto {
-
+public class ClienteDto implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String nome;
     private String endereco;

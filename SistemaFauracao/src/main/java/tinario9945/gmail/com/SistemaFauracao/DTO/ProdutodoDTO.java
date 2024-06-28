@@ -1,17 +1,21 @@
 package tinario9945.gmail.com.SistemaFauracao.DTO;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import tinario9945.gmail.com.SistemaFauracao.Models.Produtos;
 
 @Getter
 @Setter
-public class ProdutodoDTO {
+public class ProdutodoDTO implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String nomeProduto;
     private double preco;
     private Integer marcaId;
     private Integer categoriaId;
+    private byte[] imagem;
 
     public ProdutodoDTO(Produtos entity) {
         this.id = entity.getId();
