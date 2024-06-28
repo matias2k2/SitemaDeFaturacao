@@ -16,6 +16,7 @@ import { ListaProdutosComponent } from './Components/lista-produtos/lista-produt
 import { HeaderComponent } from './Components/header/header/header.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { MenuComponent } from './Components/menu/menu.component';
+import { CategoriaComponent } from './Components/categoria/categoria.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MenuComponent } from './Components/menu/menu.component';
     ListaProdutosComponent,
     HeaderComponent,
     InicioComponent,
-    MenuComponent
+    MenuComponent,
+    CategoriaComponent
   ],
   imports: [
     BrowserModule,
