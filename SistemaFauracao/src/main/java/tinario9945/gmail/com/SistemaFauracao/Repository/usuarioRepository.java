@@ -13,4 +13,6 @@ import tinario9945.gmail.com.SistemaFauracao.Models.usuario;
 public interface usuarioRepository extends JpaRepository<usuario,Integer> {
     @Query("SELECT u FROM usuario u WHERE u.nome  = :nome ")
     Optional<usuario> findByNome(@Param("nome") String nome);
+
+    
 }
