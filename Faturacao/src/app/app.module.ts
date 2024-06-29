@@ -15,11 +15,8 @@ import { ProdutosComponent } from './Components/produtos/produtos.component';
 import { ListaProdutosComponent } from './Components/lista-produtos/lista-produtos.component';
 import { HeaderComponent } from './Components/header/header/header.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
-<<<<<<< HEAD
 import { MenuComponent } from './Components/menu/menu.component';
 import { CategoriaComponent } from './Components/categoria/categoria.component';
-=======
->>>>>>> parent of d45be1f (continuando)
 
 
 @NgModule({
@@ -34,13 +31,9 @@ import { CategoriaComponent } from './Components/categoria/categoria.component';
     ProdutosComponent,
     ListaProdutosComponent,
     HeaderComponent,
-<<<<<<< HEAD
     InicioComponent,
     MenuComponent,
     CategoriaComponent
-=======
-    InicioComponent
->>>>>>> parent of d45be1f (continuando)
   ],
   imports: [
     BrowserModule,

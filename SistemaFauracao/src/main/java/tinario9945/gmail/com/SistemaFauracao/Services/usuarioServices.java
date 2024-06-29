@@ -10,16 +10,21 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.transaction.Transactional;
 import tinario9945.gmail.com.SistemaFauracao.DTO.ClienteDto;
 
 import tinario9945.gmail.com.SistemaFauracao.DTO.usuarioDto;
 
 import tinario9945.gmail.com.SistemaFauracao.Models.usuario;
+import tinario9945.gmail.com.SistemaFauracao.Models.emun.TipoUsuario;
 import tinario9945.gmail.com.SistemaFauracao.Repository.usuarioRepository;
 
 @Service
 public class usuarioServices {
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipoUsuario;
     @Autowired
     private usuarioRepository usuariorepository;
 
@@ -42,6 +47,7 @@ public class usuarioServices {
         entity.setNome(dto.getNome());
         entity.setSenha(dto.getSenha());
         entity.setEmail(dto.getEmail());
+        entity.setTipoUsuario(tipoUsuario.COMUM);
        
         entity = usuariorepository.save(entity);
         return new usuarioDto(entity);

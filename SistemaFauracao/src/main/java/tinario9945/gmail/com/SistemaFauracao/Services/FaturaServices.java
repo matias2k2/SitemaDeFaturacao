@@ -37,8 +37,7 @@ public class FaturaServices {
     private MarcasRepository marcasRepository;
     @Autowired
     private ProdutosRepository produtosrepository;
-    @Autowired
-    private usuarioRepository usuariorepository;
+   
     @Autowired
     private ClienteRepository clienteRepository;
 
@@ -55,10 +54,7 @@ public class FaturaServices {
         return new FaturaDto(fatura);
     }
 
-    /**
-     * @param dto
-     * @return
-     */
+   
     @Transactional
     public FaturaDto insert(FaturaDto dto) {
         Fatura fatura = new Fatura();
