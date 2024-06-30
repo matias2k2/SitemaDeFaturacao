@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;500;600&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.cabecalho,
+nav {
+  background-color: #37474F;
+  padding: 13px;
+}
+
+.cabecalho h1,
+nav h1 {
+  padding: 12px;
+  text-indent: 120px;
+  color: #fff;
+}
+
+.cabecalho h1 span,
+nav h1 span {
+  color: #ED7947;
+}
+
+.centro {
+  margin: 10px auto;
+  margin-top: 7%;
+  margin-right: 10px;
+}
+
+.caixa1 {
+  width: 622.52px;
+  height: 579.66px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.caixa {
+  margin: 10px;
+  display: inline-block;
+  width: 622.52px;
+  height: 579.66px;
+}
+
+.caixa h1 {
+  text-align: center;
+  color: #00D4FF;
+  padding: 40px;
+}
+
+.caixa button {
+  width: 80%;
+  margin-top: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #00aaff;
+  color: #0B1F34;
+  cursor: pointer;
+}
+
+.texto p {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 27.77px;
+  letter-spacing: -0.015em;
+  text-align: left;
+  color: #ED7947;
+}
+/*# sourceMappingURL=inicio.component.css.map */

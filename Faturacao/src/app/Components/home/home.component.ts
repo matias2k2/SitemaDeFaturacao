@@ -32,7 +32,7 @@ export class HomeComponent {
   isCategoria: boolean = false;
   catigoriaOBJ: Categoria =
     {
-      name: '',
+      nome: '',
 
     }
 
@@ -75,7 +75,7 @@ export class HomeComponent {
   Resgistarvenda(event: Event) {
     event.preventDefault();
     this.isVenda = !this.isVenda;
-    
+
   }
 
   onSubmitMacacao(): void {
@@ -118,8 +118,8 @@ export class HomeComponent {
   onSubmit(): void {
     if (this.categoriaForm.valid) {
       const categoriaData: Categoria = {
-        name: this.categoriaForm.value.name,
-        marcas_id: this.idFk
+        nome: this.categoriaForm.value.name,
+        marcaId: this.categoriaForm.value.marcaId,
       };
       this.servico.addcategoria(categoriaData).subscribe(
 

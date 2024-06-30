@@ -43,12 +43,17 @@ public class usuarioServices {
 
     @Transactional
     public usuarioDto insert(usuarioDto dto) {
+        // Verifica se o nome já existe
+        if (usuariorepository.findByNome(dto.getNome()).isPresent()) {
+            throw new RuntimeException("Este usuario ja se encontra Registado: ");
+        }
+
         usuario entity = new usuario();
         entity.setNome(dto.getNome());
         entity.setSenha(dto.getSenha());
         entity.setEmail(dto.getEmail());
-        entity.setTipoUsuario(tipoUsuario.COMUM);
-       
+        entity.setTipoUsuario(TipoUsuario.COMUM);
+
         entity = usuariorepository.save(entity);
         return new usuarioDto(entity);
     }

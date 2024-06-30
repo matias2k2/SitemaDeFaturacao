@@ -1,7 +1,6 @@
-export interface Usuarios
-{
-   nome : String;
-   email : String ;
-   senha : String;
-
+export interface Usuarios {
+  nome: String;
+  email: String;
+  senha: String;
+  
 }

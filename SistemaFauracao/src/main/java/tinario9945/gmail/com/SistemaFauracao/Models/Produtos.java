@@ -29,7 +29,7 @@ public class Produtos implements Serializable {
 
     private String nomeProduto;
     private double preco;
-    private byte[] imagem;
+    
 
     @ManyToOne
     @JoinColumn(name = "marca_id", nullable = false)

@@ -15,4 +15,5 @@ public interface usuarioRepository extends JpaRepository<usuario,Integer> {
     Optional<usuario> findByNome(@Param("nome") String nome);
 
     
+    
 }

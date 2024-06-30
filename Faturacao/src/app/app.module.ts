@@ -17,6 +17,11 @@ import { HeaderComponent } from './Components/header/header/header.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { MenuComponent } from './Components/menu/menu.component';
 import { CategoriaComponent } from './Components/categoria/categoria.component';
+import { CommonModule } from '@angular/common';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -33,16 +38,19 @@ import { CategoriaComponent } from './Components/categoria/categoria.component';
     HeaderComponent,
     InicioComponent,
     MenuComponent,
-    CategoriaComponent
+    CategoriaComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

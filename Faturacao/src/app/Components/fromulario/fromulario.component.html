@@ -1,77 +1,68 @@
 <app-header></app-header>
 <app-menu></app-menu>
 <div class="container corfundo">
-  <form id="clienteProdutoForm">
-      <div class="row">
-          <div class="col">
-              <h3 class="title">Formulario Cliente</h3>
+    <form id="clienteProdutoForm">
+        <div class="row">
+            <div class="col">
+                <h3 class="title">Formulario Cliente</h3>
 
-              <div class="inputBox">
-                  <span>Nome :</span>
-                  <input type="text" name="nomeCliente" placeholder="Nome do cliente" required>
-              </div>
+                <div class="inputBox">
+                    <span>Nome :</span>
+                    <input type="text" name="nomeCliente" placeholder="Nome do cliente" required>
+                </div>
 
-              <div class="inputBox">
-                  <span>Endereço :</span>
-                  <input type="text" name="enderecoCliente" placeholder="Endereço do cliente" required>
-              </div>
-              <div class="inputBox">
-                  <span>Telefone :</span>
-                  <input type="text" name="telefoneCliente" placeholder="Numero do Telefone" required>
-              </div>
-              <div class="inputBox">
-                  <span>Email :</span>
-                  <input type="email" name="emailCliente" placeholder="example@example.com" required>
-              </div>
+                <div class="inputBox">
+                    <span>Endereço :</span>
+                    <input type="text" name="enderecoCliente" placeholder="Endereço do cliente" required>
+                </div>
+                <div class="inputBox">
+                    <span>Telefone :</span>
+                    <input type="text" name="telefoneCliente" placeholder="Numero do Telefone" required>
+                </div>
+                <div class="inputBox">
+                    <span>Email :</span>
+                    <input type="email" name="emailCliente" placeholder="example@example.com" required>
+                </div>
 
-              <div class="flex">
-                  <div class="inputBox">
-                      <span>Estado :</span>
-                      <input type="text" name="estadoCliente" placeholder="Estado" required>
-                  </div>
-                  <div class="inputBox">
-                      <span>CEP :</span>
-                      <input type="text" name="cepCliente" placeholder="12345-678" required>
-                  </div>
-              </div>
-          </div>
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>Quantidade :</span>
+                        <input type="number" name="quantidadeProduto" placeholder="Quantidade" required>
+                    </div>
+                    <div class="inputBox">
+                        <span>Valor a ser Pago :</span>
+                        <input type="number" step="0.01" name="valorPago" placeholder="Valor a ser Pago" required>
+                    </div>
+                </div>
+            </div>
 
-          <div class="col">
-              <h3 class="title">Produto</h3>
+            <div class="col">
+                <h3 class="title">Produto</h3>
 
-              <div class="inputBox">
-                  <span>Forma de Pagamento :</span>
-                  <input type="text" name="formaPagamento" placeholder="Forma de Pagamento" required>
-              </div>
-              <div class="inputBox">
-                  <span>Nome do Produto :</span>
-                  <input type="text" name="nomeProduto" placeholder="Nome do Produto" required>
-              </div>
-              <div class="inputBox">
-                  <span>Descrição do Produto :</span>
-                  <input type="text" name="descricaoProduto" placeholder="Descrição do Produto" required>
-              </div>
-              <div class="inputBox">
-                  <span>Preço do Produto :</span>
-                  <input type="number" step="0.01" name="precoProduto" placeholder="Preço do Produto" required>
-              </div>
-              <div class="inputBox">
-                  <span>Data de Emissão :</span>
-                  <input type="date" name="dataEmissao" required>
-              </div>
+                <div class="inputBox">
+                    <span>Forma de Pagamento :</span>
+                    <input type="text" name="formaPagamento" placeholder="Forma de Pagamento" required>
+                </div>
+                <div class="inputBox">
+                    <span>Nome do Produto :</span>
+                    <input type="text" name="nomeProduto" placeholder="Nome do Produto" required>
+                </div>
+                <div class="inputBox">
+                    <span>Descrição do Produto :</span>
+                    <input type="text" name="descricaoProduto" placeholder="Descrição do Produto" required>
+                </div>
+                <div class="inputBox">
+                    <span>Preço do Produto :</span>
+                    <input type="number" step="0.01" name="precoProduto" placeholder="Preço do Produto" required>
+                </div>
+                <div class="inputBox">
+                    <span>Data de Emissão :</span>
+                    <input type="date" name="dataEmissao" required>
+                </div>
 
-              <div class="flex">
-                  <div class="inputBox">
-                      <span>Quantidade :</span>
-                      <input type="number" name="quantidadeProduto" placeholder="Quantidade" required>
-                  </div>
-                  <div class="inputBox">
-                      <span>Valor a ser Pago :</span>
-                      <input type="number" step="0.01" name="valorPago" placeholder="Valor a ser Pago" required>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <input type="submit" value="Proceed to Checkout" class="submit-btn">
-  </form>
+
+            </div>
+        </div>
+        <input type="submit" value="Proceed to Checkout" class="submit-btn">
+    </form>
 </div>

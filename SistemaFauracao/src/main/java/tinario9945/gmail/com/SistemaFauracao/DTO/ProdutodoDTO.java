@@ -15,7 +15,7 @@ public class ProdutodoDTO implements Serializable{
     private double preco;
     private Integer marcaId;
     private Integer categoriaId;
-    private byte[] imagem;
+    
 
     public ProdutodoDTO(Produtos entity) {
         this.id = entity.getId();

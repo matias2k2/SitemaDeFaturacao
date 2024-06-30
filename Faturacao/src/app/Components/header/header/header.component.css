@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;500;600&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.cabecalho,
+nav {
+  background-color: #37474F;
+  padding: 13px;
+}
+
+.cabecalho h1,
+nav h1 {
+  padding: 12px;
+  text-indent: 120px;
+  color: #fff;
+}
+
+.cabecalho h1 span,
+nav h1 span {
+  color: #ED7947;
+}
+/*# sourceMappingURL=header.component.css.map */

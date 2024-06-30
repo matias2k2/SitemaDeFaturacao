@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.corpo {
+  margin-top: 4%;
+  background: #0B1F34;
+}
+
+.corpo .from1 {
+  background: #dddd;
+  width: 100px;
+}
+
+.tabela {
+  margin-top: 4%;
+  width: 100%;
+  height: 45vh;
+  padding: 20px;
+}
+
+.tabela h1 {
+  text-align: center;
+  color: #ED7947;
+}
+
+.tabela .pagination {
+  text-align: center;
+  margin: 0 auto;
+  width: 60px;
+}
+
+.tabela .pagination button {
+  background-color: #37474F;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  color: #ED7947;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tabela thead tr th {
+  background-color: #00D4FF;
+}
+
+.tabela tbody tr th {
+  background-color: #00D4FF;
+}
+
+.tabela tbody tr td {
+  background-color: #4C5D66;
+}
+/*# sourceMappingURL=home.component.css.map */
