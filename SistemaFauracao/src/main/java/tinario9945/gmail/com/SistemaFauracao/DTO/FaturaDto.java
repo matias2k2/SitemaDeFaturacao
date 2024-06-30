@@ -15,7 +15,7 @@ import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
 public class FaturaDto implements Serializable{
     private static final long serialVersionUID = 1L;
     private Integer id;
-    private Instant dataEmissao;
+    private LocalTime dataEmissao;
     private float valorTotal;
     private int quantidade;
     private Integer produtoId;
@@ -33,7 +33,7 @@ public class FaturaDto implements Serializable{
         this.clienteId = fatura.getCliente().getId();
         this.categoriaId = fatura.getCategoria().getId();
         this.marcaId = fatura.getMarca().getId();
-        //this.usuarioId = fatura.getUsuarios().getUsuario_id();
+        this.usuarioId = fatura.getUsuario().getUsuario_id();
 
     }
 

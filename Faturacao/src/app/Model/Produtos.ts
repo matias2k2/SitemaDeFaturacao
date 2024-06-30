@@ -1,7 +1,7 @@
-export interface Produtos
-{
-  nameProdutos : String;
-  Descricao : String;
-  preco : number;
-
+export interface Produtos {
+  id?:number;
+  nomeProduto: String;
+  preco: number;
+  marcaId: number;
+  categoriaId: number;
 }

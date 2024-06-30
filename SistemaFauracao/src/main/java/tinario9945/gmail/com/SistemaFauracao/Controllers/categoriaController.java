@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tinario9945.gmail.com.SistemaFauracao.DTO.CatigoriaDto;
+import tinario9945.gmail.com.SistemaFauracao.DTO.MarcasDto;
 import tinario9945.gmail.com.SistemaFauracao.Services.CatigoriaServices;
 
 @RestController
@@ -20,7 +21,8 @@ public class categoriaController {
     
     @GetMapping
     public List<CatigoriaDto> findAll() {
-        return servicoes.findAll();
+        List<CatigoriaDto> result = servicoes.findAll();
+        return result;
     }
     @PostMapping
     public ResponseEntity<CatigoriaDto> insert(@RequestBody CatigoriaDto dto) {

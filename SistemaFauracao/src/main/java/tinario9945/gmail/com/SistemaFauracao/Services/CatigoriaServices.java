@@ -26,10 +26,11 @@ public class CatigoriaServices {
 
     // Retomando a lista d
     public List<CatigoriaDto> findAll() {
-        List<Catigoria> resulatado = repository.findAll();
-        List<CatigoriaDto> dto = resulatado.stream().map(x -> new CatigoriaDto(x)).collect(Collectors.toList());
+        List<Catigoria> resultado = repository.findAll();
+        List<CatigoriaDto> dto = resultado.stream()
+                .map(catigoria -> new CatigoriaDto(catigoria))
+                .collect(Collectors.toList());
         return dto;
-
     }
 
     @Transactional

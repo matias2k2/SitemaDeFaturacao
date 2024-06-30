@@ -40,7 +40,8 @@ public class FaturaServices {
    
     @Autowired
     private ClienteRepository clienteRepository;
-
+    @Autowired
+    private usuarioRepository usuariorepository;
     @Transactional
     public List<FaturaDto> findAll() {
         List<Fatura> result = faturasrepository.findAll();
@@ -78,7 +79,8 @@ public class FaturaServices {
         Cliente cliente = clienteRepository.findById(dto.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com ID: " + dto.getClienteId()));
 
-        //usuario usuario = usuariorepository.findById(dto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
+        usuario usuario = usuariorepository.findById(dto.getUsuarioId())
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
         
 
         // Associa as entidades à fatura
@@ -86,7 +88,7 @@ public class FaturaServices {
         fatura.setCategoria(categoria);
         fatura.setProduto(produtos);
         fatura.setCliente(cliente);
-        //fatura.setUsuarios(usuario);
+        fatura.setUsuario(usuario);
 
         // Salva a fatura no banco de dados
         fatura = faturasrepository.save(fatura);
@@ -119,14 +121,14 @@ public class FaturaServices {
         Cliente cliente = clienteRepository.findById(dto.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com ID: " + dto.getClienteId()));
 
-        //usuario usuario = usuariorepository.findById(dto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
+        usuario usuario1 = usuariorepository.findById(dto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
 
        // Associa as entidades à fatura
        fatura.setMarca(marca);
        fatura.setCategoria(categoria);
        fatura.setProduto(produtos);
        fatura.setCliente(cliente);
-       //fatura.setUsuarios(usuario);
+       fatura.setUsuario(usuario1);
 
 
         // Salva a fatura no banco de dados

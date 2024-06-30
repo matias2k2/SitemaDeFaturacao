@@ -1,37 +1,45 @@
-<div class="container corfundo" *ngIf="isDivVisible">
-    <div class="row">
-        <div class="col">
-            <h3 class="title">Registar Categoria</h3>
+<app-header></app-header>
+<app-menu></app-menu>
 
-            <form [formGroup]="produtoForm" (ngSubmit)="onSubmitProdutos()">
-                <div class="form-group">
-                    <label for="nome">Nome do Produto:</label>
-                    <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Digite o nome do produto" required>
-                </div>
+<main class="container">
 
-                <div class="form-group">
-                    <label for="marca_id">Marca:</label>
-                    <select id="marca_id" formControlName="marca_id" class="form-control" required (change)="selecionarMarca($event)">
+    <div class="container corfundo" *ngIf="isDivVisible">
+        <div class="row">
+            <div class="col">
+                <h3 class="title">Registar Produtos</h3>
+
+                <form [formGroup]="produtoForm" (ngSubmit)="onSubmitProdutos()">
+                    <div class="form-group">
+                        <label for="nome">Nome do Produto:</label>
+                        <input type="text" id="nome" formControlName="nomeProduto" class="form-control" placeholder="Digite o nome do produto" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marca_id">Marca:</label>
+                        <select id="marca_id" formControlName="marcaId" class="form-control" required (change)="selecionarMarca($event)">
             <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nome }}</option>
           </select>
-                </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="categoria_id">Categoria:</label>
-                    <select id="categoria_id" formControlName="categoria_id" class="form-control" required>
+                    <div class="form-group">
+                        <label for="categoria_id">Categoria:</label>
+                        <select id="categoria_id" formControlName="categoriaId" class="form-control" required>
             <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
           </select>
-                </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="preco">Preço:</label>
-                    <input type="text" id="preco" formControlName="preco" class="form-control" placeholder="Digite o preço" required>
-                </div>
+                    <div class="form-group">
+                        <label for="preco">Preço:</label>
+                        <input type="text" id="preco" formControlName="preco" class="form-control" placeholder="Digite o preço" required>
+                    </div>
 
-                <button type="submit" class="btn btn-primary" [disabled]="!produtoForm.valid">Adicionar Produto</button>
-            </form>
+                    <button type="submit" class="btn btn-primary" [disabled]="!produtoForm.valid">Adicionar Produto</button>
+                </form>
 
-            <button type="button" class="btn btn-secondary submit-btn" (click)="voltar()">Voltar</button>
+                <button type="button" class="btn btn-secondary submit-btn" routerLink="">Voltar</button>
+            </div>
         </div>
     </div>
-</div>
+
+
+</main>

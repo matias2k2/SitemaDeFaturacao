@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Fatura } from 'src/app/Model/Fatura';
 import { environment } from 'src/environments/environment.development';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +13,14 @@ export class FaturasService {
 
   constructor(private http: HttpClient) {}
 
-  UsuariofinAll(): Observable<Fatura[]> {
-    return this.http.get<Fatura[]>(`${this.apiUrl}/marcas`);
+  FaturasfinAll(): Observable<Fatura[]> {
+    return this.http.get<Fatura[]>(`${this.apiUrl}/fatura`);
   }
   getByNome(nome: string): Observable<Fatura[]> {
-    return this.http.get<Fatura[]>(`${this.apiUrl}/marcas/nome/${nome}`);
+    return this.http.get<Fatura[]>(`${this.apiUrl}/fatura/nome/${nome}`);
   }
 
-  adicionarUsuario(obj: Fatura): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/marcas`, obj);
+  adicionarFaturas(obj: Fatura): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/fatura`, obj);
   }
 }

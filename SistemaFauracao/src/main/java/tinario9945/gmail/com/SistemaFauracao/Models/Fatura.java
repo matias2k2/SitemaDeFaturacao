@@ -36,7 +36,7 @@ public class Fatura implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Instant dataEmissao;
+    private LocalTime dataEmissao;
     private float valorTotal;
     private int quantidade;
 
@@ -62,7 +62,8 @@ public class Fatura implements Serializable {
     public Fatura() {
     }
 
-    public Fatura(Integer id, Instant dataEmissao, float valorTotal, int quantidade, Produtos produto, Cliente cliente,
+    public Fatura(Integer id, 
+            LocalTime dataEmissao, float valorTotal, int quantidade, Produtos produto, Cliente cliente,
             Catigoria categoria, Marcas marca) {
         this.id = id;
         this.dataEmissao = dataEmissao;

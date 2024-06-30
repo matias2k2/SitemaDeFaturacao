@@ -1,37 +1,37 @@
 <app-header></app-header>
 <app-menu></app-menu>
 <div class="container corfundo">
-    <form id="clienteProdutoForm">
+    <form [formGroup]="faturasForm" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col">
                 <h3 class="title">Formulario Cliente</h3>
 
                 <div class="inputBox">
                     <span>Nome :</span>
-                    <input type="text" name="nomeCliente" placeholder="Nome do cliente" required>
+                    <input type="text" name="nomeCliente" formControlName="nome" placeholder="Nome do cliente" required>
                 </div>
 
                 <div class="inputBox">
                     <span>Endereço :</span>
-                    <input type="text" name="enderecoCliente" placeholder="Endereço do cliente" required>
+                    <input type="text" name="enderecoCliente" formControlName="endereco" placeholder="Endereço do cliente" required>
                 </div>
                 <div class="inputBox">
                     <span>Telefone :</span>
-                    <input type="text" name="telefoneCliente" placeholder="Numero do Telefone" required>
+                    <input type="text" name="telefoneCliente" formControlName="telefone" placeholder="Numero do Telefone" required>
                 </div>
                 <div class="inputBox">
                     <span>Email :</span>
-                    <input type="email" name="emailCliente" placeholder="example@example.com" required>
+                    <input type="email" name="emailCliente" formControlName="email" placeholder="example@example.com" required>
                 </div>
 
                 <div class="flex">
                     <div class="inputBox">
                         <span>Quantidade :</span>
-                        <input type="number" name="quantidadeProduto" placeholder="Quantidade" required>
+                        <input type="number" name="quantidadeProduto" formControlName="quantidade" placeholder="Quantidade" required>
                     </div>
                     <div class="inputBox">
                         <span>Valor a ser Pago :</span>
-                        <input type="number" step="0.01" name="valorPago" placeholder="Valor a ser Pago" required>
+                        <input type="number" step="0.01" formControlName="valorTotal" placeholder="Valor a ser Pago" required>
                     </div>
                 </div>
             </div>

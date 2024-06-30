@@ -20,7 +20,10 @@ public class CatigoriaDto implements Serializable{
     public CatigoriaDto(Catigoria catigoria) {
         this.id = catigoria.getId();
         this.nome = catigoria.getNome();
-        this.marcaId = catigoria.getMarca().getId();
+        // Verificação se marca não é nula
+        if (catigoria.getMarca() != null) {
+            this.marcaId = catigoria.getMarca().getId();
+        }
 
     }
 
