@@ -9,6 +9,7 @@ import { InicioComponent } from './Components/inicio/inicio.component';
 import { MarcasComponent } from './Components/marcas/marcas.component';
 import { CategoriaComponent } from './Components/categoria/categoria.component';
 import { FromularioComponent } from './Components/fromulario/fromulario.component';
+import { AdminComponent } from './Components/admin/admin.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginfromComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'marca', component: MarcasComponent },
   { path: 'categoria', component: CategoriaComponent },
   { path: 'formulario', component: FromularioComponent },
+  { path: 'admin', component: AdminComponent },
 ];
 
 

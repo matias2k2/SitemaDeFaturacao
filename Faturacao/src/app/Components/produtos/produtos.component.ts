@@ -30,6 +30,7 @@ export class ProdutosComponent {
     private serviceProduto: ProdutosService
   ) {
     this.produtoForm = this.fb.group({
+      id: ['', Validators.required],
       nomeProduto: ['', Validators.required],
       marcaId: ['', Validators.required],
       preco: ['', Validators.required],
@@ -69,6 +70,7 @@ export class ProdutosComponent {
     // Lógica para submeter o formulário de produtos
     if (this.produtoForm.valid) {
       const produtoData: Produtos = {
+        id:0,
         nomeProduto: this.produtoForm.value.nomeProduto,
         marcaId: this.produtoForm.value.marcaId,
         preco: this.produtoForm.value.preco,

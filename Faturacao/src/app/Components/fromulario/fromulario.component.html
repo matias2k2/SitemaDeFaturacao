@@ -1,68 +1,64 @@
 <app-header></app-header>
 <app-menu></app-menu>
 <div class="container corfundo">
-    <form [formGroup]="faturasForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="clienteForm" (ngSubmit)="onClienteSubmit()" [ngClass]="{'fade-out': clienteRegistrado}">
         <div class="row">
             <div class="col">
                 <h3 class="title">Formulario Cliente</h3>
-
-                <div class="inputBox">
-                    <span>Nome :</span>
-                    <input type="text" name="nomeCliente" formControlName="nome" placeholder="Nome do cliente" required>
+                <div class="mb-3">
+                    <label class="form-label">Nome :</label>
+                    <input type="text" formControlName="nomeCliente" class="form-control" placeholder="Nome do cliente" required>
                 </div>
-
-                <div class="inputBox">
-                    <span>Endereço :</span>
-                    <input type="text" name="enderecoCliente" formControlName="endereco" placeholder="Endereço do cliente" required>
+                <div class="mb-3">
+                    <label class="form-label">Endereço :</label>
+                    <input type="text" formControlName="enderecoCliente" class="form-control" placeholder="Endereço do cliente" required>
                 </div>
-                <div class="inputBox">
-                    <span>Telefone :</span>
-                    <input type="text" name="telefoneCliente" formControlName="telefone" placeholder="Numero do Telefone" required>
+                <div class="mb-3">
+                    <label class="form-label">Telefone :</label>
+                    <input type="text" formControlName="telefoneCliente" class="form-control" placeholder="Número do Telefone" required>
                 </div>
-                <div class="inputBox">
-                    <span>Email :</span>
-                    <input type="email" name="emailCliente" formControlName="email" placeholder="example@example.com" required>
+                <div class="mb-3">
+                    <label class="form-label">Email :</label>
+                    <input type="email" formControlName="emailCliente" class="form-control" placeholder="example@example.com" required>
                 </div>
-
-                <div class="flex">
-                    <div class="inputBox">
-                        <span>Quantidade :</span>
-                        <input type="number" name="quantidadeProduto" formControlName="quantidade" placeholder="Quantidade" required>
-                    </div>
-                    <div class="inputBox">
-                        <span>Valor a ser Pago :</span>
-                        <input type="number" step="0.01" formControlName="valorTotal" placeholder="Valor a ser Pago" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <h3 class="title">Produto</h3>
-
-                <div class="inputBox">
-                    <span>Forma de Pagamento :</span>
-                    <input type="text" name="formaPagamento" placeholder="Forma de Pagamento" required>
-                </div>
-                <div class="inputBox">
-                    <span>Nome do Produto :</span>
-                    <input type="text" name="nomeProduto" placeholder="Nome do Produto" required>
-                </div>
-                <div class="inputBox">
-                    <span>Descrição do Produto :</span>
-                    <input type="text" name="descricaoProduto" placeholder="Descrição do Produto" required>
-                </div>
-                <div class="inputBox">
-                    <span>Preço do Produto :</span>
-                    <input type="number" step="0.01" name="precoProduto" placeholder="Preço do Produto" required>
-                </div>
-                <div class="inputBox">
-                    <span>Data de Emissão :</span>
-                    <input type="date" name="dataEmissao" required>
-                </div>
-
-
+                <button type="submit" class="btn btn-primary">Registrar Cliente</button>
+                <button class="btn btn-secondary" routerLink="">Voltar</button>
             </div>
         </div>
-        <input type="submit" value="Proceed to Checkout" class="submit-btn">
     </form>
+    <form *ngIf="clienteRegistrado" [formGroup]="produtoForm" (ngSubmit)="onProdutoSubmit()" class="fade-in">
+        <div class="row mt-5">
+            <div class="col">
+                <h3 class="title">Produto</h3>
+                <div class="mb-3">
+                    <label class="form-label">Nome do Produto :</label>
+                    <select formControlName="nomeProduto" class="form-select" (change)="onProdutoChange($event)">
+          <option value="">Selecione um produto</option>
+          <option *ngFor="let product of produtos" [value]="product.nomeProduto">{{ product.nomeProduto }}</option>
+        </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Preço do Produto :</label>
+                    <input type="number" formControlName="precoProduto" class="form-control" placeholder="Preço do Produto" [value]="selectedProduct?.preco" required readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Data de Emissão :</label>
+                    <input type="date" formControlName="dataEmissao" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label class="form-label">Quantidade :</label>
+                        <input type="number" formControlName="quantidade" class="form-control" placeholder="Quantidade" (input)="calculateTotal()" required>
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label">Valor a ser Pago :</label>
+                        <input type="number" step="0.01" formControlName="valorTotal" class="form-control" placeholder="Valor a ser Pago" [value]="produtoForm.get('valorTotal')?.value" required readonly>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Fatura</button>
+                <button class="btn btn-secondary" routerLink="">Voltar</button>
+            </div>
+        </div>
+    </form>
+
 </div>

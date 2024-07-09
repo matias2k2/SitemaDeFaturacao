@@ -1,14 +1,24 @@
-<div class="list-container">
-<header class="list-header">
-  <h1>Sistema de faturacao </h1>
-</header>
-<section class="list-section">
-  <div class="search-bar">
-    <input type="date" placeholder="Data Inicial">
-    <input type="date" placeholder="Data Final">
-    <button class="clear-search">LIMPAR PESQUISA</button>
-    <button class="view-graph">VER GRÁFICO</button>
-  </div>
-</section>
-
+<div class="container mt-4">
+    <h3>Lista de Produtos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let produto of produtos">
+                <td>{{ produto.id }}</td>
+                <td>{{ produto.nomeProduto }}</td>
+                <td>{{ produto.preco | currency }}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteProduto(produto.id)">Eliminar
+                        </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

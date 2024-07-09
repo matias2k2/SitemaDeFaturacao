@@ -2,9 +2,12 @@ package tinario9945.gmail.com.SistemaFauracao.DTO;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +18,8 @@ import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
 public class FaturaDto implements Serializable{
     private static final long serialVersionUID = 1L;
     private Integer id;
-    private LocalTime dataEmissao;
-    private float valorTotal;
+    
+    private Double valorTotal;
     private int quantidade;
     private Integer produtoId;
     private Integer clienteId;
@@ -26,7 +29,7 @@ public class FaturaDto implements Serializable{
 
     public FaturaDto(Fatura fatura) {
         this.id = fatura.getId();
-        this.dataEmissao = fatura.getDataEmissao();
+        
         this.valorTotal = fatura.getValorTotal();
         this.quantidade = fatura.getQuantidade();
         this.produtoId = fatura.getProduto().getId();

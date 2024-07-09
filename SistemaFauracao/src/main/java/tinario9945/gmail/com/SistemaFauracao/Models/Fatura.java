@@ -11,6 +11,8 @@ import java.util.List;
 
 import org.hibernate.mapping.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,9 +37,8 @@ public class Fatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private LocalTime dataEmissao;
-    private float valorTotal;
+    
+    private Double valorTotal;
     private int quantidade;
 
     @ManyToOne
@@ -63,10 +64,11 @@ public class Fatura implements Serializable {
     }
 
     public Fatura(Integer id, 
-            LocalTime dataEmissao, float valorTotal, int quantidade, Produtos produto, Cliente cliente,
+             
+            Double valorTotal, int quantidade, Produtos produto, Cliente cliente,
             Catigoria categoria, Marcas marca) {
         this.id = id;
-        this.dataEmissao = dataEmissao;
+        
         this.valorTotal = valorTotal;
         this.quantidade = quantidade;
         this.produto = produto;

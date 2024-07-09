@@ -1,41 +1,30 @@
 <main class="main">
-  <div class="container1">
-    <div class="form-image">
-      <img src="assets/img/undraw_shopping_re_3wst.svg" alt="">
+    <div class="container1">
+        <div class="form-image">
+            <img src="assets/img/undraw_shopping_re_3wst.svg" alt="">
+        </div>
+        <div class="form">
+            <form (ngSubmit)="onSubmit()">
+                <div class="form-header">
+                    <div class="title">
+                        <h1>Seja bem-vindo</h1>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="email">E-mail</label>
+                        <input id="email" type="email" name="email" [(ngModel)]="email" placeholder="Digite seu e-mail" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Senha</label>
+                        <input id="password" type="password" name="password" [(ngModel)]="password" placeholder="Digite sua senha" required>
+                    </div>
+                </div>
+                <div class="continue-button">
+                    <button type="submit">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" routerLink="/signup">Cadastrar</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form">
-      <form  >
-        <div class="form-header">
-          <div class="title">
-            <h1>Seja bem-vido</h1>
-          </div>
-
-        </div>
-
-        <div class="input-group">
-
-
-
-          <div class="input-box">
-            <label for="email">E-mail</label>
-            <input id="email" type="email" name="email" placeholder="Digite seu e-mail" required >
-          </div>
-
-
-          <div class="input-box">
-            <label for="password">Senha</label>
-            <input id="password" type="password" name="password" placeholder="Digite sua senha" required>
-          </div>
-
-
-        </div>
-
-        <div class="continue-button">
-          <button type="submit">Confirmar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-
 </main>

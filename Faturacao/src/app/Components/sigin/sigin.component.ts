@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuarios } from 'src/app/Model/Usuarios';
 import { UsuarioService } from 'src/app/services/Usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sigin',
@@ -14,6 +15,7 @@ export class SiginComponent {
   usuario : Usuarios[] = [];
   usuarioForm !:FormGroup;
   constructor(private servicos: UsuarioService, private fb: FormBuilder,
+    private router: Router,
     private toastr: ToastrService) {
         this.usuarioForm = this.fb.group({
           nome:['',Validators.required],
@@ -35,6 +37,7 @@ export class SiginComponent {
             this.toastr.success('Usuario adicionada com sucesso:');
             console.log('Usuario adicionada com sucesso:', response);
             // Lógica adicional se necessário (por exemplo, resetar o formulário)
+             this.router.navigate(['/inicio']);
           },
           (error) => {
             this.toastr.error('Este nome Ja se encontra registado');

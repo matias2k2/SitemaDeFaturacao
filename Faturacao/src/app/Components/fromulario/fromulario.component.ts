@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Fatura } from 'src/app/Model/Fatura';
 import { Produtos } from 'src/app/Model/Produtos';
@@ -19,32 +19,175 @@ import { ClientesService } from 'src/app/services/Clientes/clientes.service';
 export class FromularioComponent {
   clientes: Clientes[] = [];
   produtos: Produtos[] = [];
-  faturasForm!: FormGroup;
   clienteForm!: FormGroup;
+  produtoForm!: FormGroup;
+  clienteRegistrado: boolean = false;
+  selectedProduct: Produtos | undefined;
+
+  nome1 : string | undefined;
+
   constructor(
-    private serverFaturas: FaturasService,
     private fb: FormBuilder,
     private clienteServico: ClientesService,
     private toastr: ToastrService,
-    private produtosService: ProdutosService
-  ) {
-    this.faturasForm = this.fb.group({
-      dataEmissao: ['', Validators.required],
-      valorTotal: ['', Validators.required],
-      quantidade: ['', Validators.required],
-      produtoId: ['', Validators.required],
-      clienteId: ['', Validators.required],
-      categoriaId: ['', Validators.required],
-      marcaId: ['', Validators.required],
-      usuarioId: ['', Validators.required],
-    });
-    this.clienteForm = this.fb.group({
-      nome: ['', Validators.required],
-      email: ['', Validators.required],
-      endereco: ['', Validators.required],
-      telefone: ['', Validators.required],
-    });
+    private produtosService: ProdutosService,
+    private faturaServicos: FaturasService
+  ) {}
+
+  ngOnInit(): void {
+    this.initForms();
+    this.ClienteFindAll();
+    this.ProdutosFindAll();
   }
+
+  initForms(): void {
+    this.clienteForm = this.fb.group({
+      nomeCliente: ['', Validators.required],
+      enderecoCliente: ['', Validators.required],
+      telefoneCliente: ['', Validators.required],
+      emailCliente: ['', [Validators.required, Validators.email]],
+    });
+
+    this.produtoForm = this.fb.group({
+      nomeProduto: ['', Validators.required],
+      precoProduto: [{ value: '', disabled: true }, Validators.required],
+      dataEmissao: ['', Validators.required],
+      quantidade: ['', Validators.required],
+      valorTotal: ['',  Validators.required],
+    });
+
+  }
+
+  onClienteSubmit(): void {
+    if (this.clienteForm.valid) {
+      const clienteDados = {
+        nome: this.clienteForm.value.nomeCliente,
+        email: this.clienteForm.value.emailCliente,
+        endereco: this.clienteForm.value.enderecoCliente,
+        telefone: this.clienteForm.value.telefoneCliente,
+      };
+      this.nome1 = this.clienteForm.value.nomeCliente;
+
+      this.clienteServico.adicionarClientes(clienteDados).subscribe(
+        (responseCliente) => {
+          this.toastr.success('Cliente registrado com sucesso!');
+          this.clienteRegistrado = true;
+          this.ClienteFindAll(); // Atualiza a lista de clientes
+          this.clienteForm.reset();
+          this.ProdutosFindAll(); // Atualiza a lista de produtos
+        },
+        (errorCliente) => {
+          this.toastr.error('Erro ao registrar cliente');
+          console.error('Erro ao registrar cliente:', errorCliente);
+        }
+      );
+    } else {
+      this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  onProdutoSubmit(): void {
+    if (this.produtoForm.valid) {
+      const nomeCliente = this.nome1;
+
+      console.log('resedxxxxxxxxx', this.nome1);
+      if (!nomeCliente) {
+        this.toastr.error('Por favor, selecione um cliente.');
+        return;
+      }
+
+      const clienteId = this.getClienteIdByName(nomeCliente);
+      if (clienteId === undefined) {
+        this.toastr.error('Cliente não encontrado ou ID não obtido.');
+        return;
+      }
+
+      const nomeProduto = this.produtoForm.value.nomeProduto;
+      if (!nomeProduto) {
+        this.toastr.error('Por favor, selecione um produto.');
+        return;
+      }
+
+      const marcaId = this.getMarcaIdByProduto(nomeProduto);
+      const categoriaId = this.getCategoriaIdByProduto(nomeProduto);
+
+      console.log('clienteId:', clienteId);
+      console.log('marcaId:', marcaId);
+      console.log('categoriaId:', categoriaId);
+
+      if (
+        this.selectedProduct?.id &&
+        marcaId !== undefined &&
+        categoriaId !== undefined
+      ) {
+        let valorTotal = this.produtoForm.value.valorTotal;
+
+        if (this.produtoForm.value.quantidade >= 3) {
+          valorTotal *= 0.86; // Aplicando desconto de 14%
+        }
+
+        const faturaDados: Fatura = {
+          dataEmissao: this.produtoForm.value.dataEmissao,
+          valorTotal: Number(valorTotal),
+          quantidade: this.produtoForm.value.quantidade,
+          produtoId: Number(this.selectedProduct.id),
+          clienteId: clienteId,
+          categoriaId: Number(categoriaId),
+          marcaId: Number(marcaId),
+          usuarioId: 1, // Adicione o ID do usuário aqui se necessário
+        };
+
+        console.log('faturaDados:', faturaDados);
+
+        this.faturaServicos.adicionarFaturas(faturaDados).subscribe(
+          (responseFatura) => {
+            this.toastr.success('Fatura adicionada com sucesso');
+            this.generatePDF(faturaDados);
+            this.produtoForm.reset();
+          },
+          (errorFatura) => {
+            this.toastr.error('Erro ao adicionar fatura');
+            console.error('Erro ao adicionar fatura:', errorFatura);
+          }
+        );
+      } else {
+        this.toastr.error(
+          'Erro ao buscar ID do cliente, produto, marca ou categoria.'
+        );
+      }
+    } else {
+      this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  onProdutoChange(event: any): void {
+    const nomeProduto = event.target.value;
+    this.selectedProduct = this.produtos.find(
+      (product) => product.nomeProduto === nomeProduto
+    );
+
+    if (this.selectedProduct) {
+      this.produtoForm.patchValue({
+        precoProduto: this.selectedProduct.preco,
+      });
+      this.calculateTotal();
+    }
+  }
+
+  calculateTotal(): void {
+    const quantidade = this.produtoForm.value.quantidade;
+    const precoProduto = this.selectedProduct?.preco;
+    if (quantidade && precoProduto) {
+      let valorTotal = quantidade * precoProduto;
+      if (quantidade >= 3) {
+        valorTotal *= 0.86; // Aplicando desconto de 14%
+      }
+      this.produtoForm.patchValue({
+        valorTotal: valorTotal.toFixed(2),
+      });
+    }
+  }
+
   ProdutosFindAll(): void {
     this.produtosService.ProdutosfinAll().subscribe(
       (dados) => {
@@ -52,10 +195,12 @@ export class FromularioComponent {
         console.log('Produtos:', this.produtos);
       },
       (error) => {
-        console.error('Erro ao buscar produtos', error);
+        this.toastr.error('Erro ao buscar produtos');
+        console.error('Erro ao buscar produtos:', error);
       }
     );
   }
+
   ClienteFindAll(): void {
     this.clienteServico.ClientesfinAll().subscribe(
       (dados) => {
@@ -63,98 +208,74 @@ export class FromularioComponent {
         console.log('Clientes:', this.clientes);
       },
       (error) => {
-        console.error('Erro ao buscar clientes', error);
+        this.toastr.error('Erro ao buscar clientes');
+        console.error('Erro ao buscar clientes:', error);
       }
     );
   }
-
-  onSubmit(): void {
-    if (this.clienteForm.valid && this.faturasForm.valid) {
-      const clienteDados: Clientes = {
-        nome: this.clienteForm.value.nome,
-        email: this.clienteForm.value.email,
-        endereco: this.clienteForm.value.endereco,
-        telefone: this.clienteForm.value.telefone,
-      };
-
-      this.clienteServico.adicionarClientes(clienteDados).subscribe(
-        (responseCliente) => {
-          this.toastr.success('Cliente adicionado com sucesso');
-          this.ClienteFindAll(); // Atualiza a lista de clientes
-
-          // Espera um momento para a lista de clientes ser atualizada
-          setTimeout(() => {
-            const clienteId = this.getClienteIdByName(
-              this.clienteForm.value.nome
-            );
-
-            if (clienteId !== null && clienteId !== undefined) {
-              const faturaDados: Fatura = {
-                dataEmissao: this.faturasForm.get('dataEmissao')!.value,
-                valorTotal: this.faturasForm.get('valorTotal')!.value,
-                quantidade: this.faturasForm.get('quantidade')!.value,
-                produtoId: this.faturasForm.get('produtoId')!.value,
-                clienteId: clienteId, // ID encontrado
-                categoriaId: this.faturasForm.get('categoriaId')!.value,
-                marcaId: this.faturasForm.get('marcaId')!.value,
-                usuarioId: this.faturasForm.get('usuarioId')!.value,
-              };
-
-              // Aplicar desconto se a quantidade for maior ou igual a 3
-              if (faturaDados.quantidade >= 3) {
-                faturaDados.valorTotal *= 0.86; // Aplicando desconto de 14%
-              }
-
-              this.serverFaturas.adicionarFaturas(faturaDados).subscribe(
-                (responseFatura) => {
-                  this.toastr.success('Fatura adicionada com sucesso');
-                  this.generatePDF(faturaDados);
-                  console.log('Fatura adicionada com sucesso:', responseFatura);
-                },
-                (errorFatura) => {
-                  this.toastr.error('Erro ao adicionar fatura');
-                  console.error('Erro ao adicionar fatura:', errorFatura);
-                }
-              );
-            } else {
-              this.toastr.error(
-                'Erro ao buscar ID do cliente recém-adicionado'
-              );
-              console.error('Erro ao buscar ID do cliente recém-adicionado');
-            }
-          }, 1000); // Espera de 1 segundo para garantir que a lista de clientes seja atualizada
-        },
-        (errorCliente) => {
-          this.toastr.error('Erro ao adicionar cliente');
-          console.error('Erro ao adicionar cliente:', errorCliente);
-        }
-      );
+  getProdutoByName(nome: string): Produtos | undefined {
+    if (!nome) {
+      console.error('Nome do produto não pode ser nulo ou indefinido');
+      return undefined;
     }
+
+    const produto = this.produtos.find(
+      (produto) => produto.nomeProduto === nome.trim()
+    );
+    console.log('Produto encontrado:', produto);
+    return produto;
   }
+
   getClienteIdByName(nome: string): number | undefined {
-    const cliente = this.clientes.find((cliente) => cliente.nome === nome);
-    return cliente?.id;
+    if (!nome) {
+      console.error('Nome do cliente não pode ser nulo ou indefinido');
+      return undefined;
+    }
+
+    const cliente = this.clientes.find(
+      (cliente) => cliente.nome === nome.trim()
+    );
+
+    if (!cliente) {
+      console.error('Cliente não encontrado para o nome:', nome);
+      return undefined;
+    }
+
+    console.log('Cliente encontrado:', cliente);
+    return cliente.id;
+  }
+
+  getMarcaIdByProduto(nome: string): number | undefined {
+    const produto = this.getProdutoByName(nome);
+    if (produto) {
+      console.log('Marca do produto:', produto.marcaId);
+      return produto.marcaId;
+    }
+    console.error('Produto não encontrado para o nome:', nome);
+    return undefined;
+  }
+
+  getCategoriaIdByProduto(nome: string): number | undefined {
+    const produto = this.getProdutoByName(nome);
+    if (produto) {
+      console.log('Categoria do produto:', produto.categoriaId);
+      return produto.categoriaId;
+    }
+    console.error('Produto não encontrado para o nome:', nome);
+    return undefined;
   }
 
   generatePDF(fatura: Fatura): void {
     const doc = new jsPDF();
 
-    doc.text('Fatura', 10, 10);
-    doc.text(`Data de Emissão: ${fatura.dataEmissao}`, 10, 20);
-    doc.text(`Quantidade: ${fatura.quantidade}`, 10, 30);
-    doc.text(`Valor Total: ${fatura.valorTotal}`, 10, 40);
+    doc.text('============= Fatura De Compre =============', 10, 10);
+    doc.text('', 10, 10);
+    doc.text('', 10, 10);
+    doc.text(`=== Data de Emissão: ${fatura.dataEmissao}`, 10, 20);
+    doc.text(`=== Quantidade: ${fatura.quantidade}`, 10, 30);
+    doc.text(`=== Valor Total: ${fatura.valorTotal}     `, 10, 40);
+    doc.text(`=== CLiente : ${this.nome1}     `, 10, 40);
 
     doc.save('fatura.pdf');
-  }
-
-  onProdutoSelect(produtoId: number): void {
-    const produto = this.produtos.find((p) => p.id === produtoId);
-    if (produto) {
-      this.faturasForm.patchValue({
-        categoriaId: produto.categoriaId,
-        marcaId: produto.marcaId,
-        valorTotal: produto.preco, // Preenche o valor total com o preço do produto
-      });
-    }
   }
 }

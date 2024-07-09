@@ -2,30 +2,30 @@
 <app-menu></app-menu>
 <main class="container-fluid">
     <nav class="container">
-            <div class="marca" >
-              <form [formGroup]="marcaForm" (ngSubmit)=" onSubmitMacacao()">
+        <div class="marca">
+            <form [formGroup]="marcaForm" (ngSubmit)=" onSubmitMacacao()">
                 <div class="form-group">
-                  <label for="nome">Nome da Marca:</label>
-                  <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Digite o nome da marca"
-                    required>
+                    <label for="nome">Nome da Marca:</label>
+                    <input type="text" id="nome" formControlName="nome" class="form-control" placeholder="Digite o nome da marca" required>
                 </div>
                 <div class="produtoEx">
                     <div class="itens">
-                         <img src="/assets/img/comput.png" alt="">
-                         
+                        <img src="/assets/img/comput.png" alt="">
+
                     </div>
                     <div class="itens">
-                         <img src="/assets/img/card1.png" alt="">
-                         <h1></h1>
+                        <img src="/assets/img/card1.png" alt="">
+                        <h1></h1>
                     </div>
                     <div class="itens">
-                         <img src="/assets/img/compre.png" alt="">
-                         <h1></h1>
+                        <img src="/assets/img/compre.png" alt="">
+                        <h1></h1>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="!marcaForm.valid">Adicionar Marca</button>
-              </form>
-            </div>
+                <button class="btn btn-secondary" routerLink="">Voltar</button>
+            </form>
+        </div>
     </nav>
 
 </main>

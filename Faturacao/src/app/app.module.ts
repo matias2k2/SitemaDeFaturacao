@@ -22,6 +22,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { FatuaraFromComponent } from './Components/fatuara-from/fatuara-from.component';
+import { AdminComponent } from './Components/admin/admin.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { ToastrModule } from 'ngx-toastr';
     InicioComponent,
     MenuComponent,
     CategoriaComponent,
+    FatuaraFromComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

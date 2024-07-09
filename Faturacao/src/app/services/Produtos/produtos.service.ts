@@ -22,4 +22,7 @@ export class ProdutosService {
   adicionarProdutos(obj: Produtos): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/produtos`, obj);
   }
+  deleteProduto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/produtos/${id}`);
+  }
 }

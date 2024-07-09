@@ -61,7 +61,7 @@ public class FaturaServices {
         Fatura fatura = new Fatura();
 
         // Configura os dados da fatura
-        fatura.setDataEmissao(dto.getDataEmissao());
+        
         fatura.setQuantidade(dto.getQuantidade());
         fatura.setValorTotal(dto.getValorTotal());
 
@@ -103,7 +103,7 @@ public class FaturaServices {
                 .orElseThrow(() -> new EntityNotFoundException("Fatura não encontrada com id: " + id));
 
         // Atualiza os dados da fatura com base no DTO recebido
-        fatura.setDataEmissao(dto.getDataEmissao());
+    
         fatura.setQuantidade(dto.getQuantidade());
         fatura.setValorTotal(dto.getValorTotal());
 
