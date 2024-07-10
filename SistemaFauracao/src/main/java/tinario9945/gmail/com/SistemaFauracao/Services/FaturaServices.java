@@ -59,6 +59,14 @@ public class FaturaServices {
     @Transactional
     public FaturaDto insert(FaturaDto dto) {
         Fatura fatura = new Fatura();
+        System.out.println("Dados recebidos para a fatura:");
+        System.out.println("Quantidade: " + dto.getQuantidade());
+        System.out.println("Valor Total: " + dto.getValorTotal());
+        System.out.println("Produto ID: " + dto.getProdutoId());
+        System.out.println("Cliente ID: " + dto.getClienteId());
+        System.out.println("Categoria ID: " + dto.getCategoriaId());
+        System.out.println("Marca ID: " + dto.getMarcaId());
+        System.out.println("Usuário ID: " + dto.getUsuarioId());
 
         // Configura os dados da fatura
         

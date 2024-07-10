@@ -134,7 +134,8 @@ export class FromularioComponent {
           clienteId: clienteId,
           categoriaId: Number(categoriaId),
           marcaId: Number(marcaId),
-          usuarioId: 1, // Adicione o ID do usuário aqui se necessário
+          usuarioId: 1,
+          produtos: undefined
         };
 
         console.log('faturaDados:', faturaDados);
