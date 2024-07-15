@@ -2,7 +2,6 @@
 <app-menu></app-menu>
 
 <main class="container">
-
     <div class="container corfundo" *ngIf="isDivVisible">
         <div class="row">
             <div class="col">
@@ -17,15 +16,15 @@
                     <div class="form-group">
                         <label for="marca_id">Marca:</label>
                         <select id="marca_id" formControlName="marcaId" class="form-control" required (change)="selecionarMarca($event)">
-            <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nome }}</option>
-          </select>
+                            <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nome }}</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="categoria_id">Categoria:</label>
                         <select id="categoria_id" formControlName="categoriaId" class="form-control" required>
-            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
-          </select>
+                            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -33,13 +32,11 @@
                         <input type="text" id="preco" formControlName="preco" class="form-control" placeholder="Digite o preço" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" [disabled]="produtoForm.valid">Adicionar Produto</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!produtoForm.valid">Adicionar Produto</button>
                 </form>
 
                 <button type="button" class="btn btn-secondary submit-btn" routerLink="">Voltar</button>
             </div>
         </div>
     </div>
-
-
 </main>

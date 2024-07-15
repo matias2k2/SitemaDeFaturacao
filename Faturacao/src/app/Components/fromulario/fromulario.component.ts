@@ -272,6 +272,7 @@ export class FromularioComponent {
     doc.text('============= Fatura De Compre =============', 10, 10);
     doc.text('', 10, 10);
     doc.text('', 10, 10);
+    doc.text('===  Matias goncalves  Adelina ', 10, 10);
     doc.text(`=== Data de Emissão: ${fatura.dataEmissao}`, 10, 20);
     doc.text(`=== Quantidade: ${fatura.quantidade}`, 10, 30);
     doc.text(`=== Valor Total: ${fatura.valorTotal}     `, 10, 40);
