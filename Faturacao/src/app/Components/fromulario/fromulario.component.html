@@ -26,6 +26,7 @@
             </div>
         </div>
     </form>
+
     <form *ngIf="clienteRegistrado" [formGroup]="produtoForm" (ngSubmit)="onProdutoSubmit()" class="fade-in">
         <div class="row mt-5">
             <div class="col">
@@ -39,7 +40,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Preço do Produto :</label>
-                    <input type="number" formControlName="precoProduto" class="form-control" placeholder="Preço do Produto" [value]="selectedProduct?.preco" required readonly>
+                    <input type="number" formControlName="precoProduto" class="form-control" placeholder="Preço do Produto" [value]="produtoForm.get('precoProduto')?.value" required readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Data de Emissão :</label>
@@ -56,8 +57,40 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Adicionar produto</button>
-                <button class="btn btn-secondary" routerLink="">Voltar</button>
+                <button type="button" class="btn btn-danger" (click)="cancelarAdicao()">Cancelar</button>
             </div>
         </div>
     </form>
+
+    <div *ngIf="clienteRegistrado" class="mt-5">
+        <h3 class="title">Itens da Fatura</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome do Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitário</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of itens; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nomeProdutos }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>R$ {{ (item.valorTotal / item.quantidade).toFixed(2) }}</td>
+                    <td>R$ {{ item.valorTotal.toFixed(2) }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" class="text-end">Valor Total:</th>
+                    <th>R$ {{ valorTotal.toFixed(2) }}</th>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn btn-success" (click)="confirmarFatura()">Gerar Fatura</button>
+        <button class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
+    </div>
 </div>

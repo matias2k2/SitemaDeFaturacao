@@ -109,3 +109,143 @@
 .corfundo {
     margin-top: 22px;
 }
+
+
+/* fatura.component.css */
+
+.fatura-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fatura-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.fatura-header h1 {
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.fatura-header p {
+    margin: 0;
+}
+
+.fatura-items {
+    margin-bottom: 20px;
+}
+
+.fatura-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.fatura-items table,
+.fatura-items th,
+.fatura-items td {
+    border: 1px solid #dee2e6;
+}
+
+.fatura-items th,
+.fatura-items td {
+    padding: 10px;
+    text-align: left;
+}
+
+.fatura-items th {
+    background-color: #e9ecef;
+}
+
+.fatura-footer {
+    text-align: right;
+}
+
+.fatura-footer h4 {
+    margin-bottom: 10px;
+    color: #28a745;
+}
+
+.corfundo {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    text-align: center;
+}
+
+.table tfoot th {
+    font-weight: bold;
+}
+
+.btn-success {
+    margin-top: 10px;
+}
+
+
+/* formulario.component.css */
+
+.container.corfundo {
+    background-color: #f8f9fa;
+    /* Cor de fundo suave */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: white;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}

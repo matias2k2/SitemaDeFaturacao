@@ -15,6 +15,7 @@ public class ProdutodoDTO implements Serializable{
     private double preco;
     private Integer marcaId;
     private Integer categoriaId;
+    private Integer quantidade;
     
 
     public ProdutodoDTO(Produtos entity) {
@@ -23,6 +24,7 @@ public class ProdutodoDTO implements Serializable{
         this.preco = entity.getPreco();
         this.marcaId = entity.getMarca().getId();
         this.categoriaId = entity.getCategoria().getId();
+        this.quantidade = entity.getQuantidade();
     }
 
     public ProdutodoDTO() {

@@ -13,6 +13,7 @@ import org.hibernate.mapping.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,44 +38,50 @@ public class Fatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    private Double valorTotal;
-    private int quantidade;
 
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
-    private Produtos produto;
+    private Double valorTotal;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Catigoria categoria;
-
-    @ManyToOne
-    @JoinColumn(name = "marca_id", nullable = false)
-    private Marcas marca;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private usuario usuario;
 
+    @OneToMany(mappedBy = "fatura", cascade = CascadeType.ALL)
+    private List<ItemFatura> itens = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Catigoria categoria;
+
+    // Métodos para adicionar e remover itens
+    public void adicionarItem(ItemFatura item) {
+        itens.add(item);
+        item.setFatura(this);
+    }
+
+    public void removerItem(ItemFatura item) {
+        itens.remove(item);
+        item.setFatura(null);
+    }
+
+    // Método para calcular o valor total
+    public void calcularValorTotal() {
+        this.valorTotal = itens.stream()
+                .mapToDouble(item -> item.getQuantidade() * item.getProduto().getPreco())
+                .sum();
+    }
+
     public Fatura() {
     }
 
-    public Fatura(Integer id, 
-             
-            Double valorTotal, int quantidade, Produtos produto, Cliente cliente,
-            Catigoria categoria, Marcas marca) {
+    public Fatura(Integer id, Double valorTotal, Cliente cliente, usuario usuario, List<ItemFatura> itens) {
         this.id = id;
-        
         this.valorTotal = valorTotal;
-        this.quantidade = quantidade;
-        this.produto = produto;
         this.cliente = cliente;
-        this.categoria = categoria;
-        this.marca = marca;
+        this.usuario = usuario;
+        this.itens = itens;
     }
-
 }

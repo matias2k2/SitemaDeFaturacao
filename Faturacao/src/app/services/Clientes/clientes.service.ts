@@ -19,7 +19,7 @@ export class ClientesService {
     return this.http.get<Clientes[]>(`${this.apiUrl}/clientes/nome/${nome}`);
   }
 
-  adicionarClientes(obj: Clientes): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/clientes`, obj);
+  adicionarClientes(obj: Clientes): Observable<Clientes> {
+    return this.http.post<Clientes>(`${this.apiUrl}/clientes`, obj);
   }
 }

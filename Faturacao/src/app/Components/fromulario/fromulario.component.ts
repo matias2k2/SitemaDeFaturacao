@@ -10,6 +10,7 @@ import { UsuarioService } from 'src/app/services/Usuario/usuario.service';
 import jsPDF from 'jspdf';
 import { Clientes } from 'src/app/Model/Clientes';
 import { ClientesService } from 'src/app/services/Clientes/clientes.service';
+import { ItensFaturas } from 'src/app/Model/ItensFaturas';
 
 @Component({
   selector: 'app-fromulario',
@@ -23,8 +24,8 @@ export class FromularioComponent {
   produtoForm!: FormGroup;
   clienteRegistrado: boolean = false;
   selectedProduct: Produtos | undefined;
-
-  nome1 : string | undefined;
+  itens: ItensFaturas[] = [];
+  valorTotal: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -53,126 +54,70 @@ export class FromularioComponent {
       precoProduto: [{ value: '', disabled: true }, Validators.required],
       dataEmissao: ['', Validators.required],
       quantidade: ['', Validators.required],
-      valorTotal: ['',  Validators.required],
+      valorTotal: [{ value: '', disabled: true }, Validators.required],
     });
-
   }
 
   onClienteSubmit(): void {
-    if (this.clienteForm.valid) {
-      const clienteDados = {
-        nome: this.clienteForm.value.nomeCliente,
-        email: this.clienteForm.value.emailCliente,
-        endereco: this.clienteForm.value.enderecoCliente,
-        telefone: this.clienteForm.value.telefoneCliente,
-      };
-      this.nome1 = this.clienteForm.value.nomeCliente;
+    const cliente = {
+      nome: this.clienteForm.value.nomeCliente,
+      endereco: this.clienteForm.value.enderecoCliente,
+      telefone: this.clienteForm.value.telefoneCliente,
+      email: this.clienteForm.value.emailCliente,
+    };
 
-      this.clienteServico.adicionarClientes(clienteDados).subscribe(
-        (responseCliente) => {
-          this.toastr.success('Cliente registrado com sucesso!');
-          this.clienteRegistrado = true;
-          this.ClienteFindAll(); // Atualiza a lista de clientes
-          this.clienteForm.reset();
-          this.ProdutosFindAll(); // Atualiza a lista de produtos
-        },
-        (errorCliente) => {
-          this.toastr.error('Erro ao registrar cliente');
-          console.error('Erro ao registrar cliente:', errorCliente);
-        }
-      );
-    } else {
-      this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
-    }
-  }
-
-  onProdutoSubmit(): void {
-    if (this.produtoForm.valid) {
-      const nomeCliente = this.nome1;
-
-      console.log('resedxxxxxxxxx', this.nome1);
-      if (!nomeCliente) {
-        this.toastr.error('Por favor, selecione um cliente.');
-        return;
+    this.clienteServico.adicionarClientes(cliente).subscribe(
+      () => {
+        this.clienteRegistrado = true;
+        this.toastr.success('Cliente registrado com sucesso!');
+      },
+      (error) => {
+        this.toastr.error('Erro ao registrar cliente');
+        console.error('Erro ao registrar cliente:', error);
       }
-
-      const clienteId = this.getClienteIdByName(nomeCliente);
-      if (clienteId === undefined) {
-        this.toastr.error('Cliente não encontrado ou ID não obtido.');
-        return;
-      }
-
-      const nomeProduto = this.produtoForm.value.nomeProduto;
-      if (!nomeProduto) {
-        this.toastr.error('Por favor, selecione um produto.');
-        return;
-      }
-
-      const marcaId = this.getMarcaIdByProduto(nomeProduto);
-      const categoriaId = this.getCategoriaIdByProduto(nomeProduto);
-
-      console.log('clienteId:', clienteId);
-      console.log('marcaId:', marcaId);
-      console.log('categoriaId:', categoriaId);
-
-      if (
-        this.selectedProduct?.id &&
-        marcaId !== undefined &&
-        categoriaId !== undefined
-      ) {
-        let valorTotal = this.produtoForm.value.valorTotal;
-
-        if (this.produtoForm.value.quantidade >= 3) {
-          valorTotal *= 0.86; // Aplicando desconto de 14%
-        }
-
-        const faturaDados: Fatura = {
-          dataEmissao: this.produtoForm.value.dataEmissao,
-          valorTotal: Number(valorTotal),
-          quantidade: this.produtoForm.value.quantidade,
-          produtoId: Number(this.selectedProduct.id),
-          clienteId: clienteId,
-          categoriaId: Number(categoriaId),
-          marcaId: Number(marcaId),
-          usuarioId: 1,
-          produtos: undefined
-        };
-
-        console.log('faturaDados:', faturaDados);
-
-        this.faturaServicos.adicionarFaturas(faturaDados).subscribe(
-          (responseFatura) => {
-            this.toastr.success('Fatura adicionada com sucesso');
-            this.generatePDF(faturaDados);
-            this.produtoForm.reset();
-          },
-          (errorFatura) => {
-            this.toastr.error('Erro ao adicionar fatura');
-            console.error('Erro ao adicionar fatura:', errorFatura);
-          }
-        );
-      } else {
-        this.toastr.error(
-          'Erro ao buscar ID do cliente, produto, marca ou categoria.'
-        );
-      }
-    } else {
-      this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
-    }
+    );
   }
 
   onProdutoChange(event: any): void {
     const nomeProduto = event.target.value;
-    this.selectedProduct = this.produtos.find(
-      (product) => product.nomeProduto === nomeProduto
-    );
-
+    this.selectedProduct = this.getProdutoByName(nomeProduto);
     if (this.selectedProduct) {
       this.produtoForm.patchValue({
         precoProduto: this.selectedProduct.preco,
+        nomeProduto: this.selectedProduct.nomeProduto,
       });
-      this.calculateTotal();
     }
+  }
+
+  onProdutoSubmit(): void {
+    const quantidade = this.produtoForm.value.quantidade;
+    const precoProduto = this.selectedProduct?.preco || 0;
+    const estoqueDisponivel = this.selectedProduct?.quantidade || 0;
+
+    if (quantidade > estoqueDisponivel) {
+      this.toastr.error(
+        'Não há quantidade suficiente deste produto disponível.'
+      );
+      return;
+    }
+
+    let valorTotal = quantidade * precoProduto;
+    if (quantidade >= 3) {
+      valorTotal *= 0.86; // Aplicando desconto de 14%
+    }
+
+    const item: ItensFaturas = {
+      quantidade: quantidade,
+      produtoId: this.selectedProduct?.id || 0,
+      categoriaId: this.selectedProduct?.categoriaId || 0,
+      marcaId: this.selectedProduct?.marcaId || 0,
+      nomeProdutos: this.produtoForm.value.nomeProduto,
+      valorTotal: valorTotal,
+    };
+    this.itens.push(item);
+    this.calculateFaturaTotal();
+    this.produtoForm.reset();
+    this.selectedProduct = undefined; // Reseta o produto selecionado
   }
 
   calculateTotal(): void {
@@ -187,6 +132,85 @@ export class FromularioComponent {
         valorTotal: valorTotal.toFixed(2),
       });
     }
+  }
+
+  calculateFaturaTotal(): void {
+    this.valorTotal = this.itens.reduce(
+      (total, item) => total + item.valorTotal,
+      0
+    );
+  }
+
+  confirmarFatura(): void {
+    const clienteId = this.getClienteIdByName(
+      this.clienteForm.value.nomeCliente
+    );
+    if (!clienteId) {
+      this.toastr.error('Selecione um cliente válido.');
+      return;
+    }
+
+    const fatura: Fatura = {
+      cliente: {
+        id: clienteId,
+        nome: this.clienteForm.value.nomeCliente,
+        endereco: this.clienteForm.value.enderecoCliente,
+        telefone: this.clienteForm.value.telefoneCliente,
+        email: this.clienteForm.value.emailCliente,
+      },
+      valorTotal: this.valorTotal,
+      usuarioId: 1, // Substitua pelo ID do usuário autenticado
+      itens: this.itens,
+    };
+
+    this.faturaServicos.gerarFatura(fatura).subscribe(
+      () => {
+        this.toastr.success('Fatura criada com sucesso!');
+        this.generatePDF(fatura);
+        this.resetForm();
+      },
+      (error) => {
+        this.toastr.error('Erro ao criar fatura');
+        console.error('Erro ao criar fatura:', error);
+      }
+    );
+  }
+
+  resetForm(): void {
+    this.clienteForm.reset();
+    this.produtoForm.reset();
+    this.itens = [];
+    this.valorTotal = 0;
+    this.clienteRegistrado = false;
+  }
+
+  getProdutoByName(nome: string): Produtos | undefined {
+    if (!nome) {
+      console.error('Nome do produto não pode ser nulo ou indefinido');
+      return undefined;
+    }
+    const produto = this.produtos.find(
+      (produto) => produto.nomeProduto === nome.trim()
+    );
+    console.log('Produto encontrado:', produto);
+    return produto;
+  }
+
+  getClienteIdByName(nome: string): number | undefined {
+    if (!nome) {
+      console.error('Nome do cliente não pode ser nulo ou indefinido');
+      return undefined;
+    }
+    const cliente = this.clientes.find(
+      (cliente) => cliente.nome === nome.trim()
+    );
+
+    if (!cliente) {
+      console.error('Cliente não encontrado para o nome:', nome);
+      return undefined;
+    }
+    console.log('Cliente encontrado:', cliente);
+    return cliente.id;
   }
 
   ProdutosFindAll(): void {
@@ -214,70 +238,47 @@ export class FromularioComponent {
       }
     );
   }
-  getProdutoByName(nome: string): Produtos | undefined {
-    if (!nome) {
-      console.error('Nome do produto não pode ser nulo ou indefinido');
-      return undefined;
-    }
-
-    const produto = this.produtos.find(
-      (produto) => produto.nomeProduto === nome.trim()
-    );
-    console.log('Produto encontrado:', produto);
-    return produto;
-  }
-
-  getClienteIdByName(nome: string): number | undefined {
-    if (!nome) {
-      console.error('Nome do cliente não pode ser nulo ou indefinido');
-      return undefined;
-    }
-
-    const cliente = this.clientes.find(
-      (cliente) => cliente.nome === nome.trim()
-    );
-
-    if (!cliente) {
-      console.error('Cliente não encontrado para o nome:', nome);
-      return undefined;
-    }
-
-    console.log('Cliente encontrado:', cliente);
-    return cliente.id;
-  }
-
-  getMarcaIdByProduto(nome: string): number | undefined {
-    const produto = this.getProdutoByName(nome);
-    if (produto) {
-      console.log('Marca do produto:', produto.marcaId);
-      return produto.marcaId;
-    }
-    console.error('Produto não encontrado para o nome:', nome);
-    return undefined;
-  }
-
-  getCategoriaIdByProduto(nome: string): number | undefined {
-    const produto = this.getProdutoByName(nome);
-    if (produto) {
-      console.log('Categoria do produto:', produto.categoriaId);
-      return produto.categoriaId;
-    }
-    console.error('Produto não encontrado para o nome:', nome);
-    return undefined;
-  }
 
   generatePDF(fatura: Fatura): void {
     const doc = new jsPDF();
 
-    doc.text('============= Fatura De Compre =============', 10, 10);
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 255);
+    doc.text('     ============= Fatura De Compre =============', 10, 10);
     doc.text('', 10, 10);
     doc.text('', 10, 10);
-    doc.text('===  Matias goncalves  Adelina ', 10, 10);
-    doc.text(`=== Data de Emissão: ${fatura.dataEmissao}`, 10, 20);
-    doc.text(`=== Quantidade: ${fatura.quantidade}`, 10, 30);
-    doc.text(`=== Valor Total: ${fatura.valorTotal}     `, 10, 40);
-    doc.text(`=== CLiente : ${this.nome1}     `, 10, 40);
+
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Cliente: ${fatura.cliente.nome}`, 10, 20);
+    doc.text(`Endereço: ${fatura.cliente.endereco}`, 10, 30);
+    doc.text(`Telefone: ${fatura.cliente.telefone}`, 10, 40);
+    doc.text(`Email: ${fatura.cliente.email}`, 10, 50);
+    doc.text(`Data de Emissão: ${new Date().toLocaleDateString()}`, 10, 60);
+    doc.text(`Valor Total: R$ ${fatura.valorTotal.toFixed(2)}`, 10, 70);
+
+    let yPosition = 80;
+    fatura.itens.forEach((item, index) => {
+      doc.text(
+        `${index + 1}. ${item.nomeProdutos} - Quantidade: ${
+          item.quantidade
+        } - R$ ${item.valorTotal.toFixed(2)}`,
+        10,
+        yPosition
+      );
+      yPosition += 10;
+    });
+
+    doc.text(
+      `Valor Total da Fatura: R$ ${fatura.valorTotal.toFixed(2)}`,
+      10,
+      yPosition + 10
+    );
 
     doc.save('fatura.pdf');
+  }
+  cancelarAdicao(): void {
+    this.produtoForm.reset();
+    this.selectedProduct = undefined;
   }
 }

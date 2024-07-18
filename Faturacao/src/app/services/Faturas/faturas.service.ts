@@ -19,8 +19,7 @@ export class FaturasService {
   getByNome(nome: string): Observable<Fatura[]> {
     return this.http.get<Fatura[]>(`${this.apiUrl}/fatura/nome/${nome}`);
   }
-
-  adicionarFaturas(obj: Fatura): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/fatura`, obj);
+  gerarFatura(obj: Fatura): Observable<Fatura> {
+    return this.http.post<Fatura>(`${this.apiUrl}/fatura`, obj);
   }
 }

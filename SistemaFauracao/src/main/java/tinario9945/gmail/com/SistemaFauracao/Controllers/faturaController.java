@@ -39,6 +39,7 @@ public class faturaController {
     }
     @PostMapping
     public ResponseEntity<FaturaDto> insert(@RequestBody FaturaDto dto) {
+        System.err.println("Received FaturaDto: " + dto.toString());
         FaturaDto createdDto = faturaservicos.insert(dto);
         return ResponseEntity.ok().body(createdDto);
     }

@@ -29,7 +29,15 @@
 
                     <div class="form-group">
                         <label for="preco">Preço:</label>
-                        <input type="text" id="preco" formControlName="preco" class="form-control" placeholder="Digite o preço" required>
+                        <input type="number" id="preco" formControlName="preco" class="form-control" placeholder="Digite o preço" required>
+                        <div *ngIf="produtoForm.controls['preco'].errors && produtoForm.controls['preco'].errors['negativeNumber']" class="text-danger">
+                            O preço não pode ser negativo.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="number" id="quantidade" formControlName="quantidade" class="form-control" placeholder="Digite a quantidade" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary" [disabled]="!produtoForm.valid">Adicionar Produto</button>

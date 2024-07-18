@@ -1,7 +1,8 @@
-export interface ItensFaturas
-{
-  quantidade : number;
-  preco_unitari: number;
-  subtotal : number;
-
+export interface ItensFaturas {
+  quantidade: number;
+  produtoId: number;
+  categoriaId: number;
+  marcaId: number;
+  nomeProdutos: string;
+  valorTotal: number;
 }

@@ -1,7 +1,8 @@
 package tinario9945.gmail.com.SistemaFauracao.Services;
 
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,18 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import tinario9945.gmail.com.SistemaFauracao.DTO.FaturaDto;
+import tinario9945.gmail.com.SistemaFauracao.DTO.ItemFaturaDto;
 import tinario9945.gmail.com.SistemaFauracao.Models.Catigoria;
 import tinario9945.gmail.com.SistemaFauracao.Models.Cliente;
 import tinario9945.gmail.com.SistemaFauracao.Models.Fatura;
+import tinario9945.gmail.com.SistemaFauracao.Models.ItemFatura;
 import tinario9945.gmail.com.SistemaFauracao.Models.Marcas;
 import tinario9945.gmail.com.SistemaFauracao.Models.Produtos;
 import tinario9945.gmail.com.SistemaFauracao.Models.usuario;
 import tinario9945.gmail.com.SistemaFauracao.Repository.CatigoriaRepository;
 import tinario9945.gmail.com.SistemaFauracao.Repository.ClienteRepository;
 import tinario9945.gmail.com.SistemaFauracao.Repository.FaturaRepository;
+
 import tinario9945.gmail.com.SistemaFauracao.Repository.MarcasRepository;
 import tinario9945.gmail.com.SistemaFauracao.Repository.ProdutosRepository;
 import tinario9945.gmail.com.SistemaFauracao.Repository.usuarioRepository;
@@ -29,137 +33,165 @@ import tinario9945.gmail.com.SistemaFauracao.Repository.usuarioRepository;
 @Service
 public class FaturaServices {
 
+       @Autowired
+    private FaturaRepository faturasRepository;
+
     @Autowired
-    private FaturaRepository faturasrepository;
-    @Autowired
-    private CatigoriaRepository repositoryCategoria;
+    private CatigoriaRepository categoriaRepository;
+
     @Autowired
     private MarcasRepository marcasRepository;
+
     @Autowired
-    private ProdutosRepository produtosrepository;
-   
+    private ProdutosRepository produtosRepository;
+
     @Autowired
     private ClienteRepository clienteRepository;
+
     @Autowired
-    private usuarioRepository usuariorepository;
+    private usuarioRepository usuarioRepository;
+
     @Transactional
     public List<FaturaDto> findAll() {
-        List<Fatura> result = faturasrepository.findAll();
+        List<Fatura> result = faturasRepository.findAll();
         return result.stream().map(FaturaDto::new).collect(Collectors.toList());
     }
 
     @Transactional
     public FaturaDto findById(Integer id) {
-        Fatura fatura = faturasrepository.findById(id)
+        Fatura fatura = faturasRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Fatura não encontrada com id: " + id));
         return new FaturaDto(fatura);
     }
 
-   
     @Transactional
     public FaturaDto insert(FaturaDto dto) {
-        Fatura fatura = new Fatura();
-        System.out.println("Dados recebidos para a fatura:");
-        System.out.println("Quantidade: " + dto.getQuantidade());
-        System.out.println("Valor Total: " + dto.getValorTotal());
-        System.out.println("Produto ID: " + dto.getProdutoId());
-        System.out.println("Cliente ID: " + dto.getClienteId());
-        System.out.println("Categoria ID: " + dto.getCategoriaId());
-        System.out.println("Marca ID: " + dto.getMarcaId());
-        System.out.println("Usuário ID: " + dto.getUsuarioId());
+            Fatura fatura = new Fatura();
 
-        // Configura os dados da fatura
-        
-        fatura.setQuantidade(dto.getQuantidade());
-        fatura.setValorTotal(dto.getValorTotal());
+            Cliente cliente = clienteRepository.findById(dto.getCliente().getId())
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                            "Cliente não encontrado com ID: " + dto.getCliente().getId()));
 
-        // Busca as entidades associadas (marca, categoria, produto, cliente, etc.) pelo
-        // ID
-        Marcas marca = marcasRepository.findById(dto.getMarcaId())
-                .orElseThrow(() -> new RuntimeException("Marca não encontrada com ID: " + dto.getMarcaId()));
+            usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                            "Usuário não encontrado com ID: " + dto.getUsuarioId()));
 
-        Catigoria categoria = repositoryCategoria.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada com ID: " + dto.getCategoriaId()));
+            fatura.setCliente(cliente);
+            fatura.setUsuario(usuario);
 
-        Produtos produtos = produtosrepository.findById(dto.getProdutoId())
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com ID: " + dto.getProdutoId()));
+            if (dto.getItens() == null || dto.getItens().isEmpty()) {
+                    throw new IllegalArgumentException("A fatura deve conter pelo menos um item");
+            }
 
-        Cliente cliente = clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com ID: " + dto.getClienteId()));
+            for (ItemFaturaDto itemDto : dto.getItens()) {
+                    ItemFatura item = criarItemFatura(itemDto, fatura);
+                    fatura.adicionarItem(item);
+            }
 
-        usuario usuario = usuariorepository.findById(dto.getUsuarioId())
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
-        
+            fatura.calcularValorTotal();
+            fatura = faturasRepository.save(fatura);
 
-        // Associa as entidades à fatura
-        fatura.setMarca(marca);
-        fatura.setCategoria(categoria);
-        fatura.setProduto(produtos);
+            return new FaturaDto(fatura);
+    }
+
+    private ItemFatura criarItemFatura(ItemFaturaDto itemDto, Fatura fatura) {
+            ItemFatura item = new ItemFatura();
+            item.setQuantidade(itemDto.getQuantidade());
+
+            Produtos produto = produtosRepository.findById(itemDto.getProdutoId())
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                            "Produto não encontrado com ID: " + itemDto.getProdutoId()));
+
+            Catigoria categoria = categoriaRepository.findById(itemDto.getCategoriaId())
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                            "Categoria não encontrada com ID: " + itemDto.getCategoriaId()));
+
+            Marcas marca = marcasRepository.findById(itemDto.getMarcaId())
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                            "Marca não encontrada com ID: " + itemDto.getMarcaId()));
+
+            item.setProduto(produto);
+            item.setCategoria(categoria);
+            item.setMarca(marca);
+            item.setFatura(fatura);
+
+            return item;
+    }
+    @Transactional
+    public FaturaDto update(Integer id, FaturaDto dto) {
+        Fatura fatura = faturasRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Fatura não encontrada com id: " + id));
+
+        Cliente cliente = clienteRepository.findById(dto.getCliente().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + dto.getCliente().getId()));
+
+        usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
+
         fatura.setCliente(cliente);
         fatura.setUsuario(usuario);
 
-        // Salva a fatura no banco de dados
-        fatura = faturasrepository.save(fatura);
-
-        // Retorna o DTO da fatura salva
-        return new FaturaDto(fatura);
-    }
-
-    @Transactional
-    public FaturaDto update(Integer id, FaturaDto dto) {
-        Fatura fatura = faturasrepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Fatura não encontrada com id: " + id));
-
-        // Atualiza os dados da fatura com base no DTO recebido
-    
-        fatura.setQuantidade(dto.getQuantidade());
-        fatura.setValorTotal(dto.getValorTotal());
-
-        // Busca as entidades associadas (marca, categoria, produto, cliente, etc.) pelo
-        // ID
-        Marcas marca = marcasRepository.findById(dto.getMarcaId())
-                .orElseThrow(() -> new RuntimeException("Marca não encontrada com ID: " + dto.getMarcaId()));
-
-        Catigoria categoria = repositoryCategoria.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada com ID: " + dto.getCategoriaId()));
-
-        Produtos produtos = produtosrepository.findById(dto.getProdutoId())
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com ID: " + dto.getProdutoId()));
-
-        Cliente cliente = clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com ID: " + dto.getClienteId()));
-
-        usuario usuario1 = usuariorepository.findById(dto.getUsuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + dto.getUsuarioId()));
-
-       // Associa as entidades à fatura
-       fatura.setMarca(marca);
-       fatura.setCategoria(categoria);
-       fatura.setProduto(produtos);
-       fatura.setCliente(cliente);
-       fatura.setUsuario(usuario1);
-
-
-        // Salva a fatura no banco de dados
-        fatura = faturasrepository.save(fatura);
-
-        // Retorna o DTO da fatura atualizada
-        return new FaturaDto(fatura);
-    }
-
-    @Transactional
-    public FaturaDto deletar(Integer id) {
-        try {
-
-            faturasrepository.deleteById(id);
-
-        } catch (EmptyResultDataAccessException e) {
-            // Lança uma exceção personalizada se o cliente não for encontrado
-            throw new UnsupportedOperationException("Unimplemented method 'deletar'");
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Integridade inválida");
+        if (dto.getItens() == null || dto.getItens().isEmpty()) {
+            throw new IllegalArgumentException("A fatura deve conter pelo menos um item");
         }
 
-        return null;
+        // Atualiza os itens existentes e adiciona novos
+        Set<Integer> updatedItemIds = new HashSet<>();
+        for (ItemFaturaDto itemDto : dto.getItens()) {
+            if (itemDto.getId() != null) {
+                ItemFatura existingItem = fatura.getItens().stream()
+                        .filter(item -> item.getId().equals(itemDto.getId()))
+                        .findFirst()
+                        .orElseThrow(() -> new EntityNotFoundException("Item não encontrado na fatura: " + itemDto.getId()));
+                atualizarItemFatura(existingItem, itemDto);
+                updatedItemIds.add(existingItem.getId());
+            } else {
+                ItemFatura newItem = criarItemFatura(itemDto, fatura);
+                fatura.adicionarItem(newItem);
+            }
+        }
+
+        // Remove itens que não estão mais presentes
+        fatura.getItens().removeIf(item -> !updatedItemIds.contains(item.getId()));
+
+        fatura.calcularValorTotal();
+        fatura = faturasRepository.save(fatura);
+
+        return new FaturaDto(fatura);
     }
 
+    @Transactional
+    public void deletar(Integer id) {
+        try {
+            faturasRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException("Fatura não encontrada com id: " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Não é possível excluir a fatura devido a restrições de integridade");
+        }
+    }
+
+   
+
+    private void atualizarItemFatura(ItemFatura item, ItemFaturaDto itemDto) {
+        item.setQuantidade(itemDto.getQuantidade());
+
+        if (!item.getProduto().getId().equals(itemDto.getProdutoId())) {
+            Produtos produto = produtosRepository.findById(itemDto.getProdutoId())
+                    .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com ID: " + itemDto.getProdutoId()));
+            item.setProduto(produto);
+        }
+
+        if (!item.getCategoria().getId().equals(itemDto.getCategoriaId())) {
+            Catigoria categoria = categoriaRepository.findById(itemDto.getCategoriaId())
+                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com ID: " + itemDto.getCategoriaId()));
+            item.setCategoria(categoria);
+        }
+
+        if (!item.getMarca().getId().equals(itemDto.getMarcaId())) {
+            Marcas marca = marcasRepository.findById(itemDto.getMarcaId())
+                    .orElseThrow(() -> new EntityNotFoundException("Marca não encontrada com ID: " + itemDto.getMarcaId()));
+            item.setMarca(marca);
+        }
+    }
 }

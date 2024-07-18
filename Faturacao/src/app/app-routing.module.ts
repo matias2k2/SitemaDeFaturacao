@@ -14,7 +14,7 @@ import { AdminComponent } from './Components/admin/admin.component';
 const routes: Routes = [
   { path: 'login', component: LoginfromComponent },
   { path: 'signup', component: SiginComponent },
-  { path: '', component: HomeComponent },
+  { path: 'paginapricipal', component: HomeComponent },
   { path: 'dashbor', component: DashbordComponent },
   { path: 'produtos', component: ProdutosComponent },
   { path: 'inicio', component: InicioComponent },

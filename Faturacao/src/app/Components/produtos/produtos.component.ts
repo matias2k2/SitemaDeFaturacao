@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Categoria } from 'src/app/Model/Categoria';
 import { Marcas } from 'src/app/Model/Marcas';
 
@@ -31,8 +31,9 @@ export class ProdutosComponent implements OnInit {
     this.produtoForm = this.fb.group({
       nomeProduto: ['', Validators.required],
       marcaId: ['', Validators.required],
-      preco: ['', Validators.required],
+      preco: ['', [Validators.required, this.validatePositiveNumber]],
       categoriaId: ['', Validators.required],
+      quantidade: ['', [Validators.required, this.validatePositiveNumber]],
     });
   }
 
@@ -73,6 +74,7 @@ export class ProdutosComponent implements OnInit {
         marcaId: this.produtoForm.value.marcaId,
         preco: this.produtoForm.value.preco,
         categoriaId: this.produtoForm.value.categoriaId,
+        quantidade: this.produtoForm.value.quantidade,
       };
       this.serviceProduto.adicionarProdutos(produtoData).subscribe(
         (response) => {
@@ -95,5 +97,15 @@ export class ProdutosComponent implements OnInit {
 
   voltar(): void {
     console.log('Voltando...');
+  }
+
+  private validatePositiveNumber(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const value = control.value;
+    if (value < 0) {
+      return { negativeNumber: true };
+    }
+    return null;
   }
 }

@@ -36,7 +36,4 @@ public class Marcas {
     @OneToMany(mappedBy = "marca")
     private List<Produtos> produtos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "marca")
-    private List<Fatura> faturas = new ArrayList<>();
-
 }

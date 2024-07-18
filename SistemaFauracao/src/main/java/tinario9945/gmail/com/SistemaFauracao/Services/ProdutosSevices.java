@@ -49,6 +49,7 @@ public class ProdutosSevices {
         Catigoria categoria = new Catigoria();
 
         entity.setNomeProduto(dto.getNomeProduto());
+        entity.setQuantidade(dto.getQuantidade());
 
         entity.setPreco(dto.getPreco());
         if (dto != null) {

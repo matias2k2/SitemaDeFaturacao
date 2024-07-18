@@ -29,7 +29,7 @@ public class Produtos implements Serializable {
 
     private String nomeProduto;
     private double preco;
-    
+    private Integer quantidade;
 
     @ManyToOne
     @JoinColumn(name = "marca_id", nullable = false)
@@ -40,7 +40,7 @@ public class Produtos implements Serializable {
     private Catigoria categoria;
 
     @OneToMany(mappedBy = "produto")
-    private List<Fatura> faturas = new ArrayList<>();
+    private List<ItemFatura> itens = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -66,5 +66,67 @@ public class Produtos implements Serializable {
             return false;
         return true;
     }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Marcas getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marcas marca) {
+        this.marca = marca;
+    }
+
+    public Catigoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Catigoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<ItemFatura> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemFatura> itens) {
+        this.itens = itens;
+    }
+
+
 
 }

@@ -18,22 +18,25 @@ import lombok.Getter;
 import lombok.Setter;
 import tinario9945.gmail.com.SistemaFauracao.Models.emun.TipoUsuario;
 
-
 @Entity
 @Table(name = "usuarios")
 @Getter
 @Setter
-public class usuario implements Serializable{
-    private static final long serialVersionUID =1L;
+public class usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer usuario_id;
-    private String nome ;
+
+    private String nome;
     private String email;
     private String senha;
+
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Fatura> faturas;
-    
+
 }
